@@ -1,0 +1,116 @@
+% Auth: Simon Symeonidis
+% -----------------------------------
+
+\documentclass[twoside]{article}
+
+\title{A Case Study in Ada2012: Implementing a simple Http Server}
+
+\author{Simon J. Symeonidis}
+
+\date{\today}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{url}
+\usepackage{ulem}
+\usepackage[pdftex]{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{xcolor}
+\usepackage{savetrees}
+\usepackage{cite}
+
+% COLOR DEFINITIONS
+\definecolor{blue}{RGB}{0,0,255}
+\definecolor{green}{RGB}{0,100,0}
+\definecolor{psyan}{RGB}{0,104,222}
+\definecolor{lightpsyan}{RGB}{185,239,254}
+% END COLOR DEFS
+
+\lstset{
+xleftmargin=15pt,
+linewidth=15cm,
+framexleftmargin=5mm, 
+frame=trBL, 
+frameround=tftf,
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\tiny,      % the size of the fonts that are used for the line-numbers
+numbersep=5pt,                  % how far the line-numbers are from the code
+identifierstyle=\ttfamily,
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+keywordstyle=\color{blue},
+commentstyle=\color{green},
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+tabsize=2,	                % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false        % sets if automatic breaks should only happen at whitespace
+%%% colors
+}
+
+% Custom section style
+\titleformat{\section}[frame]
+{\color{psyan}\normalfont}
+{\filleft \footnotesize ::Section \thesection ::}
+{5pt}
+{\Large\bfseries\filright}
+
+% Paragraph indentation 
+\setlength{\parindent}{0in}
+
+\makeatletter
+  \def\@seccntformat#1{\rlap{\hskip-36pt\csname the#1\endcsname}}
+\makeatother
+
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+% subsections ...
+% \titleformat*{\section}{\normalfont\Large\bfseries\color{psyan}}
+% \titleformat*{\subsection}{\normalfont\large\bfseries\color{psyan}}
+% \titleformat*{\subsubsection}{\normalfont\normalsize\bfseries\color{psyan}}
+
+% paragraphs
+
+% \titleformat*{\paragraph}{\normalfont\normalsize\bfseries\color{red}}
+% \titleformat*{\subparagraph}{\normalfont\normalsize\bfseries\color{red}}
+
+% TOC
+
+%\renewcommand\thesection{\color{psyan}\arabic{section}}
+
+\begin{document}
+
+  \pagenumbering{roman}
+  
+  \pagestyle{fancy}
+  \maketitle
+  \newpage
+  % \rhead[]{\textbf{\color{psyan}\nouppercase{\leftmark} \nouppercase{\rightmark}}}
+  % \lhead[\textbf{\color{psyan}\nouppercase{\leftmark} \nouppercase{\rightmark}}]{}
+  
+  \newpage
+  \setcounter{tocdepth}{5}
+  \tableofcontents
+  \listoffigures
+  \newpage
+  
+  \pagenumbering{arabic}
+  
+  \rfoot[]{\thepage}
+  \cfoot{}
+  \lfoot[\thepage]{}
+
+  \include{introduction}
+  \include{chapter1}
+
+\bibliography{mybib}{}
+\bibliographystyle{plain}	
+\end{document}

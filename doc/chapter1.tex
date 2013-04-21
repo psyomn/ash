@@ -1,0 +1,58 @@
+\section{Topics of interest}
+Here we discuss in a little more detail the previously outlined topics.
+
+\subsection{Concurrency}
+Ada is considered to have a good concurrency support. 
+
+% TODO Revise this part 
+\subsection{Sockets}
+Sockets are a good topic on this case study, since sockets are OS dependent
+therefore will provide some insight on how the language and application will
+behave on different platforms. 
+
+\subsection{Protocol Implementation}
+A topic that I have came accross in programming languages that is somewhat
+interesting to see in technical implementation, are protocols. Notably 
+\textbf{Erlang} makes this a breeze. Investigating this in Ada will be 
+interesting. 
+
+For this small project, we'll be implementing 4 parts of the Http protocol. 
+Namely the GET, POST, PUT and DELETE methods. We refer to the RFC2616 manual 
+for the definition of behaviours of these methods. Once they are implemented in
+this case study using Ada, the project shall be tested by using any standard
+browser such as \textit{Firefox} or \textit{Chromium}.
+
+For the reader we extract the definitions and behaviour of these four methods.
+\subsubsection{Overview of Http Protocol}
+We must add more stuff here.
+
+\subsubsection{Http 1.1 / GET}
+We must add more stuff here.
+
+\subsubsection{Http 1.1 / POST}
+We must add more stuff here.
+
+\subsubsection{Http 1.1 / PUT}
+We must add more stuff here.
+
+\subsubsection{Http 1.1 / DELETE} 
+We must add more stuff here.
+
+\subsection{First Steps}
+The first steps in an Ada application is to define the \textit{project manager 
+file} for the given project as outlined on the manual \cite{GNATintro}.
+
+%% TODO: Need to check if this is indeed the case. 
+The GNAT project file abstracts a lot of the building details into this file.
+It will take care even about other language builds, meaning that if you wish
+to create, for example C extensions to the language, you could probably achieve
+this easily, as opposed to tedious platform dependent makefiles. 
+
+Another added advantage is that GNAT Project Files also take into consideration 
+the file naming conventions. Another automated feature in this file is automatic
+building of external libraries. There are various other ways to achieve this,
+either on a makefile level, or alternatively using features in certain SCM tools
+to clone and build the libraries automatically. However having everything in one
+file allows for better, quick communication on the specification of ,
+albeit coupling very specific tr
+
