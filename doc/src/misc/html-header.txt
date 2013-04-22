@@ -1,0 +1,10 @@
+HTTP/1.1 302 Found
+Location: http://www.google.ca/
+Cache-Control: private
+Content-Type: text/html; charset=UTF-8
+Date: Mon, 22 Apr 2013 20:26:36 GMT
+Server: gws
+Content-Length: 218
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+
