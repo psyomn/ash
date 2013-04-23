@@ -37,16 +37,19 @@ browser such as \textit{Firefox} or \textit{Chromium}.
 
 For the reader we extract the definitions and behaviour of these four methods.
 \subsubsection{Overview of Http Protocol}
-The Http protocol is a request-response protocol, using octect sequences. The
-RFC2616 specification is quite detailed, but we will be implementing a very 
+The Http protocol is a text, request-response protocol. The RFC2616 
+specification is quite detailed, but we will be implementing a very 
 small subset of the specification for this case study.
 
 The Http version we are concerned with is \textbf{1.1}.
 
 \subsubsection{HEAD}
 This Http method requests the header fields of an html document. The message
-body is not to be retrieved. Here is an example of what http headers look like:
+body is not to be retrieved. Here is an example of what http headers look like.
+The definition is taken straight out of the manual: 
+\lstinputlisting[language=html]{./src/misc/header-definition.txt}{derp}
 
+Here is a more practical example. These headers are retrieved from \textit{www.google.com}:
 \lstinputlisting[language=html]{./src/misc/html-header.txt}
 
 \subsubsection{GET} 
