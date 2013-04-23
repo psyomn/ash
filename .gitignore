@@ -1,3 +1,4 @@
+*.lol
 *.bbl
 *.blg
 *.lof
@@ -8,4 +9,5 @@
 assignment1-soen487.pdf
 *.aux
 to_submit/
+*.pdf
 

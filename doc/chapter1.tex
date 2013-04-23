@@ -43,21 +43,39 @@ small subset of the specification for this case study.
 
 The Http version we are concerned with is \textbf{1.1}.
 
-\subsubsection{HEAD}
-This Http method requests the header fields of an html document. The message
-body is not to be retrieved. Here is an example of what http headers look like.
-The definition is taken straight out of the manual: 
-\lstinputlisting[language=html]{./src/misc/header-definition.txt}{derp}
-
-Here is a more practical example. These headers are retrieved from \textit{www.google.com}:
-\lstinputlisting[language=html]{./src/misc/html-header.txt}
-
-\subsubsection{GET} 
+There exists indepondent and non indepondent methods in the Http specification.
 GET is described as an indepondent method. That is, if a request is being made
 with the same specific set of parameters, then the response should be the same
 each time that request is repeated. For example, if we had a function such as
 $ f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve
-`2'.
+`2'. We present the following table, which describes the methods we will be 
+implementing:
+\\
+\begin{center}
+\begin{tabular}{| c | c |}
+\hline
+\textbf{Method} & \textbf{Type} \\ \hline \hline
+HEAD   & Indepondent \\
+GET    & Indepondent \\
+POST   & Non-Indepondent \\
+PUT    & Non-Indepodent \\ 
+DELETE & Non-Indepodent \\
+\hline
+\end{tabular}
+\end{center}
+\subsubsection{HEAD}
+This Http method requests the header fields of an html document. The message
+body is not to be retrieved. Here is an example of what http headers look like.
+The definition is taken straight out of the manual: 
+\lstinputlisting[language=html]{./src/misc/header-definition.txt}
+
+Here is a more practical example. These headers are retrieved from \textit{www.google.com}:
+\lstinputlisting[language=html]{./src/misc/html-header.txt}
+
+And this is the expected html response definition from a successful request.
+\lstinputlisting[language=html]{./src/misc/http-response.txt}
+
+\subsubsection{GET} 
 
 \subsubsection{POST}
 We must add more stuff here.

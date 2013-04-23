@@ -1,0 +1,6 @@
+Response  = Status-Line
+            *(( general-header
+              | response-header
+              | entity-header ) CRLF)
+            CRLF
+            [ message-body ]
