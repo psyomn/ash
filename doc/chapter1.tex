@@ -1,7 +1,10 @@
 \section{Topics of interest}
-Here we discuss in a little more detail the previously outlined topics. These
-topics offer us a concise and detailed tests to investigate the programming 
-language.
+Here we discuss in a little more detail the previously outlined topics. These topics offer us a concise and detailed tests to investigate the the Ada 2012 progrqamming language, along with other tools that can be used to supplement and extend future projects. We will be looking at the following aspects:
+\begin{itemize}
+\item{The Ada2012} programming language (Language structure, strengths, weaknesses, etc)
+\item{The Ada2012 Toolchain} The \textbf{gnat} compiler, the project manager files (gpr)
+\item{AUnit} for a unit testing platform
+\end{itemize}
 
 \subsection{Concurrency}
 Ada is considered to have a good concurrency support. 
@@ -13,12 +16,7 @@ therefore will provide some insight on how the language and application will
 behave on different platforms. 
 
 \subsection{Cross Platform Filesystem Support}
-To programmers that have used languages that do not require virtual machines, 
-concerns for cross platform availability of an application, more often arise. 
-This case study will use some simple filesystem operations to indicate what we 
-may and may not do with the language.
-
-We will investigate how:
+To programmers that have used languages that do not require virtual machines, concerns for cross platform availability of an application, more often arise. This case study will use some simple filesystem operations to indicate what we may and may not do with the language. We will investigate how:
 \begin{itemize}
   \item Location to resources are handled
   \item Permissions for inodes are handled
@@ -37,19 +35,11 @@ browser such as \textit{Firefox} or \textit{Chromium}.
 
 For the reader we extract the definitions and behaviour of these four methods.
 \subsubsection{Overview of Http Protocol}
-The Http protocol is a text, request-response protocol. The RFC2616 
-specification is quite detailed, but we will be implementing a very 
-small subset of the specification for this case study.
+The Http protocol is a text, request-response protocol. The RFC2616 specification is quite detailed, but we will be implementing a very small subset of the specification for this case study.
 
-The Http version we are concerned with is \textbf{1.1}.
+The Http version we are concerned with is \textbf{1.1}. There exists indempodent and non indempodent methods in the Http specification. 
 
-There exists indempodent and non indempodent methods in the Http specification.
-GET is described as an indempodent method. That is, if a request is being made
-with the same specific set of parameters, then the response should be the same
-each time that request is repeated. For example, if we had a function such as
-$ f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve
-`2'. We present the following table, which describes the methods we will be 
-implementing:
+GET is described as an indempodent method. That is, if a request is being made with the same specific set of parameters, then the response should be the same each time that request is repeated. For example, if we had a function such as $ f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve `2'. We present the following table, which describes the methods we will be implementing:
 \\
 \begin{center}
 \begin{tabular}{| c | c |}
@@ -64,9 +54,7 @@ DELETE & Indempondent \\
 \end{tabular}
 \end{center}
 \subsubsection{HEAD}
-This Http method requests the header fields of an html document. The message
-body is not to be retrieved. Here is an example of what http headers look like.
-The definition is taken straight out of the manual: 
+This Http method requests the header fields of an html document. The message body is not to be retrieved. Here is an example of what http headers look like. The definition is taken straight out of the manual:  
 \lstinputlisting[language=]{./src/misc/header-definition.txt}
 
 Here is a more practical example. These headers are retrieved from \textit{www.google.ca}:
@@ -91,16 +79,8 @@ The first steps in an Ada application is to define the \textit{project manager
 file} for the given project as outlined on the manual \cite{GNATintro}.
 
 %% TODO: Need to check if this is indeed the case. 
-The GNAT project file abstracts a lot of the building details into this file.
-It will take care even about other language builds, meaning that if you wish to
-create, for example C extensions to the language, you could achieve this
-easily, as opposed to tedious makefiles. 
+The GNAT project file abstracts a lot of the building details into this file. It will take care even about other language builds, meaning that if you wish to create, for example C extensions to the language, you could achieve this easily, as opposed to tedious makefiles. 
 
-Another added advantage is that GNAT Project Files also take into consideration 
-the file naming conventions. Another automated feature in this file is automatic
-building of external libraries. There are various other ways to achieve this,
-either on a makefile level, or alternatively using features in certain SCM tools
-to clone and build the libraries automatically. However having everything in one
-file allows for better, quick communication on the specification of ,
-albeit coupling very specific 
+Another added advantage is that GNAT Project Files also take into consideration the file naming conventions. Another automated feature in this file is automatic building of external libraries. There are various other ways to achieve this, either on a makefile level, or alternatively using features in certain SCM tools to clone and build the libraries automatically. 
 
+A notable feature of the GPR files, is that hierarchical builds are allowed, meaning that if different components require different builds, and different dependencies, that build can be isolated to that specific build alone \cite{GNATintro}. The hierarchical layering of the building process, also exploits a similar aspect to that of a layered software architecture: different layers can be developed at parallel, as could subsystems. 
