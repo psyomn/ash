@@ -8,7 +8,7 @@ Ada is considered to have a good concurrency support.
 
 % TODO Revise this part 
 \subsection{Sockets}
-Sockets are a good topic on this case study, since sockets are OS dependent
+Sockets are a good topic in this case study, since sockets are OS dependent
 therefore will provide some insight on how the language and application will
 behave on different platforms. 
 
@@ -76,9 +76,24 @@ And this is the expected html response definition from a successful request.
 \lstinputlisting[language=]{./src/misc/http-response.txt}
 
 \subsubsection{GET} 
+A \textbf{GET} method is defined in the specification, to be used for operations that
+require \textbf{reading} information. On the server side, this should not
+tamper with the resources. 
+
+A get request requires \textbf{Request-Line} field to be sent. It is up to the
+server to look for the resource requested, and send the response afterwards.
+
+Taken directly from the manual, here is a demonstration of what the GET request
+looks like, when ``accessing www.w3.org'':
+\lstinputlisting[language=]{./src/misc/get-request.txt}
 
 \subsubsection{POST}
-We must add more stuff here.
+\textbf{POST} is the indempodent method we mentioned before. This means each
+time a post request is sent, a resource must (usually) be created, always
+guaranteeing different response, for a same request.
+
+A more ``hands on'' example of this would be if a user accidentally submited a
+form twice by an accidental double click.
 
 \subsubsection{PUT}
 We must add more stuff here.
@@ -96,6 +111,7 @@ It will take care even about other language builds, meaning that if you wish to
 create, for example C extensions to the language, you could achieve this
 easily, as opposed to tedious makefiles. 
 
+%% TODO
 Another added advantage is that GNAT Project Files also take into consideration 
 the file naming conventions. Another automated feature in this file is automatic
 building of external libraries. There are various other ways to achieve this,
