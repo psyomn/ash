@@ -1,7 +1,8 @@
 with Ada.Text_IO; use Ada.Text_IO; 
+with Listener;
 
 procedure Main is 
 begin
-  Put_Line("Hello World!");
+  Listener.Listen;
 end Main;
 
