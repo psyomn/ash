@@ -23,21 +23,15 @@ project Axios is
   for Object_Dir use "obj/" & external ("mode", "release");
 
   package Builder is 
-    for Global_Compilation_Switches("Ada") use ("-p");
     for Executable ("main.adb")  use "axios";
   end Builder;
 
-  -- Package is for GNATMAKE specifically
-  --   To invoke either case, you need to set the -X flag at gnatmake in command
-  --   line. You will also notice the Mode_Type type. This constrains the values
-  --   of possible valid flags.
-  -- 
-  -- Example:
-  --   gnatmake -Paxios.gpr -Xmode=debug
+  -- To invoke either case, you need to set the -X flag at gnatmake in command
+  -- line. You will also notice the Mode_Type type. This constrains the values
+  -- of possible valid flags.
   type Mode_Type is ("debug", "release");
   Mode : Mode_Type := external ("mode", "debug");
   package Compiler is 
-
     -- Either debug or release mode
     case Mode is 
     when "debug" =>

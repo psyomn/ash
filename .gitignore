@@ -1,3 +1,7 @@
+bin/
+core.synctex.gz
+*.o
+*.ali
 *.lol
 *.bbl
 *.blg
@@ -6,8 +10,6 @@
 *.toc
 *.swp
 *.swp
-assignment1-soen487.pdf
 *.aux
-to_submit/
 *.pdf
 
