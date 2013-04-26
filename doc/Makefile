@@ -17,4 +17,4 @@ double:
 	$(BIBC) core
 
 clean:
-	rm -f *.log *.aux *.pdf *.toc *.blg *.lof
+	rm -f *.log *.aux *.pdf *.toc *.blg *.lof *.lol

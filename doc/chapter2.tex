@@ -1,19 +1,26 @@
 \section{Implementation}
-This section will deal with the more technical aspects of this case study. From
-now on we will list topics that have to do with the implementation of the simple
-Http server.
+This section will deal with the more technical aspects of this case study. From now on we will list topics that have to do with the implementation of the simple Http server.
 
 \subsection{Defining the required GNAT Project File Specification}
 The specifications list the following requirements for the directory structures: 
-\begin{itemize}
-  \item{src} The directory to contain the sources
-  \item{obj} The directory to contain the compiler output
-  \item{bin} The directory to contain the binaries
-  \item{tests} The directory to contain the tests
-\end{itemize}
-
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+src & The directory to contain the sources \\ \hline
+obj & The directory to contain the compiler output \\ \hline
+bin & The directory to contain the binaries \\ \hline
+debug & \parbox{10cm}{The non-optimized compiled binaries with debug info are stored here. You can notice this in the GPR file, where the `-g' flag is given to the compiler.} \\ \hline
+release &  \parbox{10cm}{The optimized compiled binaries without debug information. You  can notice this in the GPR file, where the `O2' flag is given to the compiler.} \\ \hline
+tests & The directory to contain the tests \\ \hline
+\end{tabular}
+\end{center}
 \subsubsection{GNAT Project File}
 Here is the project file we will be using.
 \lstinputlisting[language=Ada]{../src/axios.gpr}
-Notice that some of the flags for the compiler in both release, and debug modes 
-are the same flags used for GNU C++ compiler.
+Notice that some of the flags for the compiler in both release, and debug modes are the same flags used for GNU C++ compiler.
+
+\subsubsection{Directory Structure}
+The directory structure is as outlined on the previous bullet points.	
+
+\subsubsection{Testing}
+We will be performing a simple version of testing. We will be using \textbf{AUnit} in order to do some Ada unit testing. We will be testing very small parts of the system, as our aim is to introduce us with this technology in this case study instead of building an industrial level application.
