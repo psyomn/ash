@@ -39,8 +39,10 @@ The Http protocol is a text, request-response protocol. The RFC2616 specificatio
 
 The Http version we are concerned with is \textbf{1.1}. There exists indempodent and non indempodent methods in the Http specification. 
 
+% TODO: Not sure if I want this paragraph (or possible rewriting required)
 GET is described as an indempodent method. That is, if a request is being made with the same specific set of parameters, then the response should be the same each time that request is repeated. For example, if we had a function such as $ f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve `2'. We present the following table, which describes the methods we will be implementing:
 \\
+\begin{table} 
 \begin{center}
 \begin{tabular}{| c | c |}
 \hline
@@ -53,6 +55,8 @@ DELETE & Indempondent \\
 \hline
 \end{tabular}
 \end{center}
+\caption{HTTP Method Indempodency}
+\end{table}
 \subsubsection{HEAD}
 This Http method requests the header fields of an html document. The message body is not to be retrieved. Here is an example of what http headers look like. The definition is taken straight out of the manual:  
 \lstinputlisting[language=]{./src/misc/header-definition.txt}

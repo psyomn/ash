@@ -3,6 +3,7 @@ core.synctex.gz
 *.o
 *.ali
 *.lol
+*.lot
 *.bbl
 *.blg
 *.lof

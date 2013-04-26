@@ -3,6 +3,7 @@ This section will deal with the more technical aspects of this case study. From 
 
 \subsection{Defining the required GNAT Project File Specification}
 The specifications list the following requirements for the directory structures: 
+\begin{table}
 \begin{center}
 \begin{tabular}{|c|l|}
 \hline
@@ -12,8 +13,9 @@ bin & The directory to contain the binaries \\ \hline
 obj/debug & \parbox{10cm}{The non-optimized compiled binaries with debug info are stored here. You can notice this in the GPR file, where the `-g' flag is given to the compiler.} \\ \hline
 obj/release &  \parbox{10cm}{The optimized compiled binaries without debug information. You  can notice this in the GPR file, where the `O2' flag is given to the compiler.} \\ \hline
 tests & The directory to contain the tests \\ \hline
-\end{tabular}
-\end{center}
+\end{tabular}\end{center}
+\caption{Directory Structure Specification for GPR File}
+\end{table}
 \subsubsection{GNAT Project File}
 Here is the project file we will be using.
 \lstinputlisting[language=Ada]{../axios/axios.gpr}
@@ -27,9 +29,9 @@ Notice that some of the flags for the compiler in both release, and debug modes 
 
 \subparagraph{Builder} Notice the "package Builder is ..." line. We define the flags that should be used by the builder (gnatmake), when invoked.
 
-\subparagraph{Executable} : This is to specify the output name of the binary once the whole project is compiled.
+\subparagraph{Executable} This is to specify the output name of the binary once the whole project is compiled.
 
-\subparagraph{Compiler} : Notice the "package Compiler is ..." line. This contains the flags for the actual compiler. We have two flags `-g', and `-O2' that the seasoned GNU C++ compiler user would recognize instantly. The `-g' flag would be used to produce non-optimized binaries in order to contain extra information when debugging. 
+\subparagraph{Compiler} Notice the "package Compiler is ..." line. This contains the flags for the actual compiler. We have two flags `-g', and `-O2' that the seasoned GNU C++ compiler user would recognize instantly. The `-g' flag would be used to produce non-optimized binaries in order to contain extra information when debugging. 
 The `-O2' is for optimization, and that is the reason why it is in the release case. We define a Mode\_Type which can either be one of the two literals `debug', and `release' in order to achieve this. 
 
 \subsection{Testing}
