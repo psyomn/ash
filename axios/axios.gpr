@@ -1,0 +1,52 @@
+-- Simon Symeonidis, 2013
+-- GNAT  Project file for the  Http server case study. 
+--
+-- Used Manuals:
+--   http://docs.adacore.com/gprbuild-docs/html/gprbuild_ug.html
+--   http://docs.adacore.com/gnat-unw-docs/html/gnat_ugn_12.html
+--
+-- Example use:
+--   gnatmake -P axios.gpr -Xmode=debug -p
+project Axios is 
+
+  -- Standard configurations
+  for Main        use ("main.adb");
+  for Source_Dirs use ("src/**");
+  for Exec_Dir    use "bin/";
+
+  -- Ignore git scm stuff
+  for Ignore_Source_Sub_Dirs use (".git/");
+
+  -- Objects are contained in their own directories (this is also
+  -- known as an isolated build).
+  for Object_Dir use "obj/" & external ("mode", "debug");
+  for Object_Dir use "obj/" & external ("mode", "release");
+
+  package Builder is 
+    for Executable ("main.adb")  use "axios";
+  end Builder;
+
+  -- To invoke either case, you need to set the -X flag at gnatmake in command
+  -- line. You will also notice the Mode_Type type. This constrains the values
+  -- of possible valid flags.
+  type Mode_Type is ("debug", "release");
+  Mode : Mode_Type := external ("mode", "debug");
+  package Compiler is 
+    -- Either debug or release mode
+    case Mode is 
+    when "debug" =>
+      for Switches ("Ada") use ("-g");
+    when "release" => 
+      for Switches ("Ada") use ("-O2");
+    end case;
+  end Compiler;
+
+  -- Not needed for this study, but listed
+  package Binder is 
+  end Binder; 
+
+  -- Not needed for this study, but listed
+  package Linker is 
+  end Linker;
+
+end Axios;
