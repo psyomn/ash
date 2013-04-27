@@ -59,13 +59,13 @@ DELETE & Indempondent \\
 \end{table}
 \subsubsection{HEAD}
 This Http method requests the header fields of an html document. The message body is not to be retrieved. Here is an example of what http headers look like. The definition is taken straight out of the manual:  
-\lstinputlisting[language=]{./src/misc/header-definition.txt}
+\lstinputlisting[caption=Header Definition,language=]{./src/misc/header-definition.txt}
 
 Here is a more practical example. These headers are retrieved from \textit{www.google.ca}:
-\lstinputlisting[language=]{./src/misc/html-header.txt}
+\lstinputlisting[caption=Html Header,language=]{./src/misc/html-header.txt}
 
 And this is the expected html response definition from a successful request.
-\lstinputlisting[language=]{./src/misc/http-response.txt}
+\lstinputlisting[caption=Http Response,language=]{./src/misc/http-response.txt}
 
 \subsubsection{GET} 
 A \textbf{GET} method is defined in the specification, to be used for operations that
@@ -77,7 +77,7 @@ server to look for the resource requested, and send the response afterwards.
 
 Taken directly from the manual, here is a demonstration of what the GET request
 looks like, when ``accessing www.w3.org'':
-\lstinputlisting[language=]{./src/misc/get-request.txt}
+\lstinputlisting[caption=Http Get Request,language=]{./src/misc/get-request.txt}
 
 \subsubsection{POST}
 \textbf{POST} is the indempodent method we mentioned before. This means each

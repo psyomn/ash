@@ -18,12 +18,12 @@ tests & The directory to contain the tests \\ \hline
 \end{table}
 \subsubsection{GNAT Project File}
 Here is the project file we will be using.
-\lstinputlisting[language=Ada]{../axios/axios.gpr}
+\lstinputlisting[caption=GNAT Project File,language=Ada]{../axios/axios.gpr}
 Notice that some of the flags for the compiler in both release, and debug modes are the same flags used for GNU C++ compiler. We explain each section with a little more detail.
 
 \paragraph{Directory Structure}The directory structure is as outlined on the previously demonstrated table. We see these defined in the GPR file by the names of \textbf{Source\_Dirs}, \textbf{Exec\_Dir}. Because of the definition of the Object file directories for a debug and release version, we also get the ``obj/release'' and ``obj/debug'' directories, as previously required. A Simple hello world application would yield the following structure, for example: 
 
-\lstinputlisting[language=ruby]{src/misc/dir-struct.txt}
+\lstinputlisting[caption=Directory Structure,language=ruby]{src/misc/dir-struct.txt}
 
 \paragraph{Flags} There are many flags that can be set for the compilation and linking process. The manual covers a lot of them, but the ones used are explained.
 

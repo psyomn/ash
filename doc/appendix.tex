@@ -1,0 +1,9 @@
+\section{Appendix}
+The appendix will give some extra simplified information which might help understand the smaller parts of the given case study. Explanations and code listings are provided as best as possible.
+
+\subsection{Networking}
+A lot of the networking will seem very familiar to you if you have used BSD C Sockets. Provided are two Ada procedures. One listener, and one sender. The Listener listens for incoming connections. If a message is intercepted, the message is uppercased, and sent back to the client. 
+The client simply sends a string message to the listener. The listener listens at port 3000 (it is assumed these procedures run on your local machine, together).
+
+\lstinputlisting[language=Ada,caption=Simple Listener]{./src/appendix/simple_listener.adb}
+\lstinputlisting[language=Ada,caption=Simple Sender]{./src/appendix/simple_sender.adb}
