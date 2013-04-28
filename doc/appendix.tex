@@ -13,6 +13,28 @@ Concurrency in Ada uses tasks. Here is a small example to demonstrate this featu
 
 \subsubsection{Simple Concurrent Program}
 This is the simplest example in using tasks in Ada. The example was adapted from notes found in \cite{AdaConcurrent}, and was also the first concurrent program I wrote for testing and understanding tasks, the first time around.
-\lstinputlisting[caption=Simple Tasks in Ada,language=Ada]{./src/appendix/task_types.adb}
+\lstinputlisting[caption=Task Types in Ada,language=Ada]{./src/appendix/task_types.adb}
 
+This procedure would have the following output:
+\lstinputlisting[caption=Output for the Task Types in Ada,language=]{./src/appendix/task_types_output.txt}
+
+\section{Random Notes}
+Some other miscellanious random notes, that might help in the future. 
+
+\subsection{ADS / ADB file location}
+If the \textit{gcc-ada} compiler is being used, the specification and body files can typically be found in the following directory
+$$ /usr/lib/gcc/\$MACHTYPE/\$GCC-VERSION/adainclude/ $$
+
+\subsection{Sanity Checking}
+I wanted to test out if things were working properly every now and then. Here are a few commands that I used in order to do this.
+
+\subsubsection{Using Telnet to conenct to a Http Server}
+You can use telnet to connect to a http server, and write the headers manually, and receive the actual response. This helps at understanding a little more how the protocol works, and was used in order to debug the server.
+\\
+\lstinputlisting[language=,caption=Telnet to an Http Server]{./src/appendix/telnet-http.txt}
+
+\subsubsection{Using ncat to dump packets to a binary file}
+On the various stages of debugging, \textit{ncat} was used in order to dump the packets to a file, in order for inspection. This helped when I was facing trouble when the socket would send random garbage due to mistakes to the http servers, and have undesired consequences. 
+
+\lstinputlisting[language=bash,caption=Using ncat to dump packets]{./src/appendix/ncat-command.txt}
 
