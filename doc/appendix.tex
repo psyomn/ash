@@ -7,3 +7,12 @@ The client simply sends a string message to the listener. The listener listens a
 
 \lstinputlisting[language=Ada,caption=Simple Listener]{./src/appendix/simple_listener.adb}
 \lstinputlisting[language=Ada,caption=Simple Sender]{./src/appendix/simple_sender.adb}
+
+\subsection{Task Oriented Concurrency Model}
+Concurrency in Ada uses tasks. Here is a small example to demonstrate this feature of the language that exploits a very interesting way of achieving concurrent tasks. If more detail is required, refer to \cite{AdaTasking}
+
+\subsubsection{Simple Concurrent Program}
+This is the simplest example in using tasks in Ada. The example was adapted from notes found in \cite{AdaConcurrent}, and was also the first concurrent program I wrote for testing and understanding tasks, the first time around.
+\lstinputlisting[caption=Simple Tasks in Ada,language=Ada]{./src/appendix/task_types.adb}
+
+

@@ -68,34 +68,27 @@ And this is the expected html response definition from a successful request.
 \lstinputlisting[caption=Http Response,language=]{./src/misc/http-response.txt}
 
 \subsubsection{GET} 
-A \textbf{GET} method is defined in the specification, to be used for operations that
-require \textbf{reading} information. On the server side, this should not
-tamper with the resources. 
+A \textbf{GET} method is defined in the specification, to be used for operations that require \textbf{reading} information. On the server side, this should not tamper with the resources. 
+A get request requires \textbf{Request-Line} field to be sent. It is up to the server to look for the resource requested, and send the response afterwards.
 
-A get request requires \textbf{Request-Line} field to be sent. It is up to the
-server to look for the resource requested, and send the response afterwards.
-
-Taken directly from the manual, here is a demonstration of what the GET request
-looks like, when ``accessing www.w3.org'':
+Taken directly from the manual, here is a demonstration of what the GET request looks like, when ``accessing www.w3.org'':
 \lstinputlisting[caption=Http Get Request,language=]{./src/misc/get-request.txt}
 
 \subsubsection{POST}
-\textbf{POST} is the indempodent method we mentioned before. This means each
-time a post request is sent, a resource must (usually) be created, always
-guaranteeing different response, for a same request.
+POST is the non-indempodent method we mentioned before. This means each time a post request is sent, a resource must be created, always guaranteeing different response, for a same request. An example for this would be creating a book with common data fields such as \textit{author, year, title, etc...}
 
-A more ``hands on'' example of this would be if a user accidentally submited a
-form twice by an accidental double click.
+This is what a typical POST request looks like:
+%TODO post request is required here % 
 
 \subsubsection{PUT}
-We must add more stuff here.
+PUT is a indempodent method. It is typically used in order to update resources on the sever side. For example, if we wish to update the book re
+%TODO put request is required here % 
 
 \subsubsection{DELETE} 
-We must add more stuff here.
+DELETE is an indempodent method. It is typically used in order to delete a resource on the website.
 
 \subsection{First Steps}
-The first steps in an Ada application is to define the \textit{project manager 
-file} for the given project as outlined on the manual \cite{GNATintro}.
+The first steps in an Ada application is to define the \textit{project manager  file} for the given project as outlined on the manual \cite{GNATintro}.
 
 %% TODO: Need to check if this is indeed the case. 
 The GNAT project file abstracts a lot of the building details into this file. It will take care even about other language builds, meaning that if you wish to create, for example C extensions to the language, you could achieve this easily, as opposed to tedious makefiles. 
