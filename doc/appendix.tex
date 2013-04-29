@@ -38,3 +38,9 @@ On the various stages of debugging, \textit{ncat} was used in order to dump the 
 
 \lstinputlisting[language=bash,caption=Using ncat to dump packets]{./src/appendix/ncat-command.txt}
 
+Here is an investigation example of data sent through sockets from a test script. This is a GET request.
+\lstinputlisting[language=bash,caption=Using ncat\,  a test script\, and xxd to hex dump]{./src/appendix/xxd-ncat-log.txt}
+You can notice the CRLFs at the end of each request (that is the two bytes on the left, 0x0A, and 0x0D respectively).
+
+And here is a small, priceless one-liner that has helped me debug some of my code during this case study. It uses ncat, and pipes the output to xxd, which in turn makes a hex dump.
+\lstinputlisting[language=bash,caption=One liner to hex dump dynamically]{./src/appendix/dynamic-hexdump.txt}

@@ -1,0 +1,6 @@
+[psyomn@aeolus 423 0]$ xxd /tmp/loggy 
+0000000: 4745 5420 2f20 4874 7470 2f31 2e31 0d0a  GET / Http/1.1..
+0000010: 486f 7374 3a20 6c6f 6361 6c68 6f73 740d  Host: localhost.
+0000020: 0a43 6f6e 6e65 6374 696f 6e3a 2063 6c6f  .Connection: clo
+0000030: 7365 0d0a 0d0a                           se....
+
