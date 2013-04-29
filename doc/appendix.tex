@@ -44,3 +44,15 @@ You can notice the CRLFs at the end of each request (that is the two bytes on th
 
 And here is a small, priceless one-liner that has helped me debug some of my code during this case study. It uses ncat, and pipes the output to xxd, which in turn makes a hex dump.
 \lstinputlisting[language=bash,caption=One liner to hex dump dynamically]{./src/appendix/dynamic-hexdump.txt}
+
+\subsection{Text Manipulation}
+We list some text manipulation example code in this section, if better understanding is required. First it would be better to familiarize oneself with the \textit{String} type; one can refer to \cite{AdaStringType}.
+
+\subsubsection{Splitting}
+A common task one wants to do with strings is split them. Refer to this \cite{AdaStringSplit}, to read upon string splitting. Notice that this was added on the GNAT platform.
+
+\subsubsection{Regular Expressions}
+Regular expressions don't quite exist in the Ada programming language. However the GNAT platform provides some libraries with similar effects. A simple example can be found at \cite{AdaRegularExpressions}.
+
+
+
