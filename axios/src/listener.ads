@@ -6,7 +6,7 @@
 -- execute the proper logic.
 
 package Listener is 
-  procedure Print_Info;
+  procedure Print_Info(Receiver_Handle : Receiver);
   procedure Listen;
   procedure Set_Port(port:Integer);
 end Listener;

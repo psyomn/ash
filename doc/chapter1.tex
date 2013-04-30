@@ -11,7 +11,7 @@ Ada is considered to have a good concurrency support.
 
 % TODO Revise this part 
 \subsection{Sockets}
-Sockets are a good topic on this case study, since sockets are OS dependent
+Sockets are a good topic in this case study, since sockets are OS dependent
 therefore will provide some insight on how the language and application will
 behave on different platforms. 
 
@@ -39,8 +39,10 @@ The Http protocol is a text, request-response protocol. The RFC2616 specificatio
 
 The Http version we are concerned with is \textbf{1.1}. There exists indempodent and non indempodent methods in the Http specification. 
 
+% TODO: Not sure if I want this paragraph (or possible rewriting required)
 GET is described as an indempodent method. That is, if a request is being made with the same specific set of parameters, then the response should be the same each time that request is repeated. For example, if we had a function such as $ f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve `2'. We present the following table, which describes the methods we will be implementing:
 \\
+\begin{table} 
 \begin{center}
 \begin{tabular}{| c | c |}
 \hline
@@ -53,30 +55,40 @@ DELETE & Indempondent \\
 \hline
 \end{tabular}
 \end{center}
+\caption{HTTP Method Indempodency}
+\end{table}
 \subsubsection{HEAD}
 This Http method requests the header fields of an html document. The message body is not to be retrieved. Here is an example of what http headers look like. The definition is taken straight out of the manual:  
-\lstinputlisting[language=]{./src/misc/header-definition.txt}
+\lstinputlisting[caption=Header Definition,language=]{./src/misc/header-definition.txt}
 
 Here is a more practical example. These headers are retrieved from \textit{www.google.ca}:
-\lstinputlisting[language=]{./src/misc/html-header.txt}
+\lstinputlisting[caption=Html Header,language=]{./src/misc/html-header.txt}
 
 And this is the expected html response definition from a successful request.
-\lstinputlisting[language=]{./src/misc/http-response.txt}
+\lstinputlisting[caption=Http Response,language=]{./src/misc/http-response.txt}
 
 \subsubsection{GET} 
+A \textbf{GET} method is defined in the specification, to be used for operations that require \textbf{reading} information. On the server side, this should not tamper with the resources. 
+A get request requires \textbf{Request-Line} field to be sent. It is up to the server to look for the resource requested, and send the response afterwards.
+
+Taken directly from the manual, here is a demonstration of what the GET request looks like, when ``accessing www.w3.org'':
+\lstinputlisting[caption=Http Get Request,language=]{./src/misc/get-request.txt}
 
 \subsubsection{POST}
-We must add more stuff here.
+POST is the non-indempodent method we mentioned before. This means each time a post request is sent, a resource must be created, always guaranteeing different response, for a same request. An example for this would be creating a book with common data fields such as \textit{author, year, title, etc...}
+
+This is what a typical POST request looks like:
+%TODO post request is required here % 
 
 \subsubsection{PUT}
-We must add more stuff here.
+PUT is a indempodent method. It is typically used in order to update resources on the sever side. For example, if we wish to update the book re
+%TODO put request is required here % 
 
 \subsubsection{DELETE} 
-We must add more stuff here.
+DELETE is an indempodent method. It is typically used in order to delete a resource on the website.
 
 \subsection{First Steps}
-The first steps in an Ada application is to define the \textit{project manager 
-file} for the given project as outlined on the manual \cite{GNATintro}.
+The first steps in an Ada application is to define the \textit{project manager  file} for the given project as outlined on the manual \cite{GNATintro}.
 
 %% TODO: Need to check if this is indeed the case. 
 The GNAT project file abstracts a lot of the building details into this file. It will take care even about other language builds, meaning that if you wish to create, for example C extensions to the language, you could achieve this easily, as opposed to tedious makefiles. 
@@ -84,3 +96,13 @@ The GNAT project file abstracts a lot of the building details into this file. It
 Another added advantage is that GNAT Project Files also take into consideration the file naming conventions. Another automated feature in this file is automatic building of external libraries. There are various other ways to achieve this, either on a makefile level, or alternatively using features in certain SCM tools to clone and build the libraries automatically. 
 
 A notable feature of the GPR files, is that hierarchical builds are allowed, meaning that if different components require different builds, and different dependencies, that build can be isolated to that specific build alone \cite{GNATintro}. The hierarchical layering of the building process, also exploits a similar aspect to that of a layered software architecture: different layers can be developed at parallel, as could subsystems. 
+
+\subsubsection{Deployment View}
+The overall view of the system components can be seen in Figure \ref{fig:deployment}. 
+
+\begin{figure}[hb]
+\centering
+\includegraphics[width=4in]{gfx/deployment.png}
+\caption{Deployment Diagram}
+\label{fig:deployment}
+\end{figure}

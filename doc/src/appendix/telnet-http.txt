@@ -1,0 +1,19 @@
+[psyomn@aeolus ~ 0]$ telnet www.concordia.ca 80 
+Trying 132.205.244.34...
+Connected to www.concordia.ca.
+Escape character is '^]'.
+HEAD / Http/1.1
+Host: www.concordia.ca
+Connection: close
+
+HTTP/1.1 200 OK
+Date: Sun, 28 Apr 2013 23:08:49 GMT
+Server: Apache
+X-Powered-By: PHP/5.1.6
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+Connection closed by foreign host.
+
+

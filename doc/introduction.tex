@@ -1,13 +1,13 @@
-\section{Motivation} 
-This is a small case study in the 2012 release of the Ada programming language. The motivation for this docuemnt and exercise is to introduce me to this technology, document my progress, and help others learn said language. The topic I have chosen is to write up a very simple web server. A web server typically, has to deal with the following aspects:
+\section{Abstract} 
+This is a small case study in the 2012 release of the Ada programming language. The motivation of this case study is to expose one to the broadest topics of the Ada programming language via a detailed example. The topic I have chosen is to write up a very simple web server. A web server typically, has to deal with the following aspects:
 \begin{itemize}
 \item Concurrency
 \item Sockets, and messaging
-\item Protocol implementation (in this case \textbf{http})
-\item Different Filesystems support 
+\item The Protocol (in this case \textbf{http})
+\item Different Filesystems support
 \end{itemize} 
-
-These aspects go over a good set of small problems, that would expose uses of the language for multiple problem domains. 
+This document is hoped to help the curious reader to learn the aspects of the language with a little more ease, introduce the http protocol slightly, and provide references where possible to direct to sources for more exploration. I also record personal notes. 
+There is a core aim, to present the aforementioned array of topics to the reader, in a project that is not too big, and intimidate the beginner, and not too small to not be of any learning use. We try and achieve this balance by reducing the lines of code and sacrificing aspects of software architecture\footnote{In the code base, you might notice some aspects that could be factored out, or areas where coupling could be reduced. This will be done on purpose in order to reduce the amount of indirection, and ease the quick navigation, reading and understanding of the reader.} in order achieve this.
 
 \subsection{The name `Axios'}
 Axios stands for ``Ada eXtra ineffectual Object Oriented Server''. And it is just that!

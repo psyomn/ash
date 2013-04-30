@@ -1,0 +1,58 @@
+\section{Appendix}
+The appendix will give some extra simplified information which might help understand the smaller parts of the given case study. Explanations and code listings are provided as best as possible.
+
+\subsection{Networking}
+A lot of the networking will seem very familiar to you if you have used BSD C Sockets. Provided are two Ada procedures. One listener, and one sender. The Listener listens for incoming connections. If a message is intercepted, the message is uppercased, and sent back to the client. 
+The client simply sends a string message to the listener. The listener listens at port 3000 (it is assumed these procedures run on your local machine, together).
+
+\lstinputlisting[language=Ada,caption=Simple Listener]{./src/appendix/simple_listener.adb}
+\lstinputlisting[language=Ada,caption=Simple Sender]{./src/appendix/simple_sender.adb}
+
+\subsection{Task Oriented Concurrency Model}
+Concurrency in Ada uses tasks. Here is a small example to demonstrate this feature of the language that exploits a very interesting way of achieving concurrent tasks. If more detail is required, refer to \cite{AdaTasking}
+
+\subsubsection{Simple Concurrent Program}
+This is the simplest example in using tasks in Ada. The example was adapted from notes found in \cite{AdaConcurrent}, and was also the first concurrent program I wrote for testing and understanding tasks, the first time around.
+\lstinputlisting[caption=Task Types in Ada,language=Ada]{./src/appendix/task_types.adb}
+
+This procedure would have the following output:
+\lstinputlisting[caption=Output for the Task Types in Ada,language=]{./src/appendix/task_types_output.txt}
+
+\section{Random Notes}
+Some other miscellanious random notes, that might help in the future. 
+
+\subsection{ADS / ADB file location}
+If the \textit{gcc-ada} compiler is being used, the specification and body files can typically be found in the following directory
+$$ /usr/lib/gcc/\$MACHTYPE/\$GCC-VERSION/adainclude/ $$
+
+\subsection{Sanity Checking}
+I wanted to test out if things were working properly every now and then. Here are a few commands that I used in order to do this.
+
+\subsubsection{Using Telnet to conenct to a Http Server}
+You can use telnet to connect to a http server, and write the headers manually, and receive the actual response. This helps at understanding a little more how the protocol works, and was used in order to debug the server.
+\\
+\lstinputlisting[language=,caption=Telnet to an Http Server]{./src/appendix/telnet-http.txt}
+
+\subsubsection{Using ncat to dump packets to a binary file}
+On the various stages of debugging, \textit{ncat} was used in order to dump the packets to a file, in order for inspection. This helped when I was facing trouble when the socket would send random garbage due to mistakes to the http servers, and have undesired consequences. 
+
+\lstinputlisting[language=bash,caption=Using ncat to dump packets]{./src/appendix/ncat-command.txt}
+
+Here is an investigation example of data sent through sockets from a test script. This is a GET request.
+\lstinputlisting[language=bash,caption=Using ncat\,  a test script\, and xxd to hex dump]{./src/appendix/xxd-ncat-log.txt}
+You can notice the CRLFs at the end of each request (that is the two bytes on the left, 0x0A, and 0x0D respectively).
+
+And here is a small, priceless one-liner that has helped me debug some of my code during this case study. It uses ncat, and pipes the output to xxd, which in turn makes a hex dump.
+\lstinputlisting[language=bash,caption=One liner to hex dump dynamically]{./src/appendix/dynamic-hexdump.txt}
+
+\subsection{Text Manipulation}
+We list some text manipulation example code in this section, if better understanding is required. First it would be better to familiarize oneself with the \textit{String} type; one can refer to \cite{AdaStringType}.
+
+\subsubsection{Splitting}
+A common task one wants to do with strings is split them. Refer to this \cite{AdaStringSplit}, to read upon string splitting. Notice that this was added on the GNAT platform.
+
+\subsubsection{Regular Expressions}
+Regular expressions don't quite exist in the Ada programming language. However the GNAT platform provides some libraries with similar effects. A simple example can be found at \cite{AdaRegularExpressions}.
+
+
+
