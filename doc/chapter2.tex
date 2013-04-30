@@ -32,5 +32,15 @@ Notice that some of the flags for the compiler in both release, and debug modes 
 \subparagraph{Compiler} : Notice the "package Compiler is ..." line. This contains the flags for the actual compiler. We have two flags `-g', and `-O2' that the seasoned GNU C++ compiler user would recognize instantly. The `-g' flag would be used to produce non-optimized binaries in order to contain extra information when debugging. 
 The `-O2' is for optimization, and that is the reason why it is in the release case. We define a Mode\_Type which can either be one of the two literals `debug', and `release' in order to achieve this. 
 
-\subsection{Testing}
+\subsection{Components}
+We now describe the components of the project. 
+
+\subsubsection{Listener}
+\paragraph{Specification} Here is the code listing for the listener specification
+\lstinputlisting[language=Ada]{../axios/src/listener.adb}
+
+\paragraph{Implementation} Here is the code listing for the listener implementation
+\lstinputlisting[language=Ada]{../axios/src/listener.adb}
+
+\section{Testing}
 Testing is achieved by using \textbf{AUnit} in order to do unit testing. 
