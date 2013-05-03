@@ -74,18 +74,24 @@ A get request requires \textbf{Request-Line} field to be sent. It is up to the s
 Taken directly from the manual, here is a demonstration of what the GET request looks like, when ``accessing www.w3.org'':
 \lstinputlisting[caption=Http Get Request,language=]{./src/misc/get-request.txt}
 
-\subsubsection{POST}
+\subsubsection{POST} \label{http:axios-post}
 POST is the non-indempodent method we mentioned before. This means each time a post request is sent, a resource must be created, always guaranteeing different response, for a same request. An example for this would be creating a book with common data fields such as \textit{author, year, title, etc...}
 
 This is what a typical POST request looks like:
 %TODO post request is required here % 
 
+%TODO not sure if I'll have the time for this sort of thing
+In this case study, we will be using this to write a text file on the server, with the request body as file contents. It would be possible to retrieve these contents later on. 
+
 \subsubsection{PUT}
 PUT is a indempodent method. It is typically used in order to update resources on the sever side. For example, if we wish to update the book re
 %TODO put request is required here % 
 
+In this case study we will be using this to change a variable on the server. That way it will be possible to start the server, change this value, and get a response showing that the update was a success. It is quite possible to use this along with AUnit in order unit test these features automatically. 
+
 \subsubsection{DELETE} 
-DELETE is an indempodent method. It is typically used in order to delete a resource on the website.
+DELETE is an indempodent method. It is typically used in order to delete a resource on a website.
+We will be using this to delete resources that are created by the POST definition of Axios (refer to \ref{http:axios-post}).
 
 \subsection{First Steps}
 The first steps in an Ada application is to define the \textit{project manager  file} for the given project as outlined on the manual \cite{GNATintro}.
