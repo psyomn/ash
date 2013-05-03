@@ -1,5 +1,5 @@
 TEXER=pdflatex
-BIBC=biber
+BIBC=bibtex
 TARGET=axios.pdf
 SUBMIT_DIR=to_submit
 SRCp1=/home/psyomn/Programming/java/NetBeansProjects/ass1-part1
