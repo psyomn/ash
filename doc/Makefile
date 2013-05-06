@@ -1,5 +1,5 @@
 TEXER=pdflatex
-BIBC=biber
+BIBC=bibtex
 TARGET=axios.pdf
 SUBMIT_DIR=to_submit
 SRCp1=/home/psyomn/Programming/java/NetBeansProjects/ass1-part1
@@ -17,4 +17,4 @@ double:
 	$(BIBC) core
 
 clean:
-	rm -f *.log *.aux *.pdf *.toc *.blg *.lof *.lol
+	rm -f *.log *.aux *.pdf *.toc *.blg *.lof *.lol *.lot *.bbl
