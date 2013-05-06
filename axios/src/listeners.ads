@@ -5,8 +5,8 @@
 -- This should delegate the request to some handler, and 
 -- execute the proper logic.
 
-package Listener is 
+package Listeners is 
   procedure Print_Info(Receiver_Handle : Receiver);
   procedure Listen;
   procedure Set_Port(port:Integer);
-end Listener;
+end Listeners;

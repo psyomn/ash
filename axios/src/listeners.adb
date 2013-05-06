@@ -1,24 +1,21 @@
-with Ada.Text_IO;
 -- @author Simon Symeonidis
--- @date   
+-- @date   Mon May 6 2013
 -- Implementation for the listener
-package body Listener is
+with Ada.Text_IO;
 
-  type Receiver is tagged record
-    Port_Number : Integer range 0..65536; 
-    Host_Name   : String(1..100);
-    Response    : String(1..100); 
-    Request     : String(1..100); 
-  end record;
+with GNAT.Sockets;
+package body Listeners is
+
+
 
   -- Print to the command line information such
   -- as host and port number
-  procedure Print_Info(Receiver_Handle : Receiver) is 
+  procedure Print_Info(Listener_Handle : Receiver) is 
   begin
-    Ada.Text_IO.Put_Line("Receiver Info: ");
+    Ada.Text_IO.Put_Line("Listener Info: ");
     Ada.Text_IO.Put_Line("Port Number ");
-    Ada.Text_IO.Put_Line("Receiver Info: ");
-    Ada.Text_IO.Put_Line("Receiver Info: ");
+    Ada.Text_IO.Put_Line("Listener Info: ");
+    Ada.Text_IO.Put_Line("Listener Info: ");
   end Print_Info;
 
   -- Listen forever. Graceful shutdown omitted.
@@ -36,4 +33,14 @@ package body Listener is
     Ada.Text_IO.Put_Line("Placeholder...");
   end Set_Port;
 
-end Listener; 
+private
+
+  type Listener is tagged record
+    Port_Number : Integer range 0..65536; 
+    Host_Name   : String(1..100);
+    Response    : String(1..100); 
+    Request     : String(1..100); 
+  end record;
+
+
+end Listeners;
