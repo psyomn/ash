@@ -1,28 +1,24 @@
 -- @author Simon Symeonidis
 -- @date   Mon May 6 2013
 -- Implementation for the listener
-with Ada.Text_IO;
 
-with GNAT.Sockets;
 package body Listeners is
-
-
 
   -- Print to the command line information such
   -- as host and port number
-  procedure Print_Info(Listener_Handle : Receiver) is 
+  procedure Print_Info(Listener_Handle : Listener) is 
   begin
     Ada.Text_IO.Put_Line("Listener Info: ");
-    Ada.Text_IO.Put_Line("Port Number ");
-    Ada.Text_IO.Put_Line("Listener Info: ");
-    Ada.Text_IO.Put_Line("Listener Info: ");
+    Ada.Text_IO.Put_Line("Port Number : " 
+      & Integer'Image(Listener_Handle.Port_Number));
+    Ada.Text_IO.Put_Line("Hostname    : " 
+      & Ada.Strings.Unbounded.To_String(Listener_Handle.Host_Name));
   end Print_Info;
 
   -- Listen forever. Graceful shutdown omitted.
-  procedure Listen is
-    lvar : Boolean := true; 
+  procedure Listen(This : Listener) is
   begin
-    while lvar loop
+    while This.Shutdown loop
       Ada.Text_IO.Put_Line("Loop for listein...");
       delay 3.0;
     end loop;
@@ -32,15 +28,6 @@ package body Listeners is
   begin
     Ada.Text_IO.Put_Line("Placeholder...");
   end Set_Port;
-
-private
-
-  type Listener is tagged record
-    Port_Number : Integer range 0..65536; 
-    Host_Name   : String(1..100);
-    Response    : String(1..100); 
-    Request     : String(1..100); 
-  end record;
 
 
 end Listeners;
