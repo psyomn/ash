@@ -1,6 +1,8 @@
 -- @author Simon Symeonidis
 -- @date   Mon May 6 2013
 -- Implementation for the listener
+-- @note Thanks to:
+-- http://en.wikibooks.org/wiki/Ada_Programming/Libraries/Ada.Streams/Example
 
 package body Listeners is
 
@@ -27,7 +29,8 @@ package body Listeners is
     return Name;
   end Tiny_Name;
 
-  -- Return the date as string in the format specified by the RFC2616 manual.
+  -- Return the date as string, in the format specified by the RFC2616 manual.
+  -- TODO need to fix this.
   function Response_Date
   return String is 
   begin
@@ -51,29 +54,62 @@ package body Listeners is
     Bind_Socket(Server, Address);
     Listen_Socket(Server); 
     -- pass to other socket.
-    Ada.Text_IO.Put_Line("Successfully listening on: " & Port_Type'Image(Address.Port));
+    Ada.Text_IO.Put_Line
+     ("Successfully listening on: " & 
+      Port_Type'Image(Address.Port));
 
     while not This.Shutdown loop
       Accept_Socket(Server, Socket, Address); 
       Channel := Stream(Socket);
       declare
-        CRLF     : String := ASCII.CR & ASCII.LF; 
-	-- NOTE: this makes the program crash with a STORAGE_ERROR exception. 
-	--       Other sources recommend to increase the heap size.
-        --Message  : String := String'Input(Channel);
-	Response : String :=  
-	  "Http/1.1 200 OK" & CRLF &
-	  -- Response_Date     & CRLF &
-          "Server: axios"   & CRLF &
+        CRLF         : String := ASCII.CR & ASCII.LF; 
+        Data         : Ada.Streams.Stream_Element_Array(1..256);
+        Offset       : Ada.Streams.Stream_Element_Count;
+
+        Request      : Ada.Strings.Unbounded.Unbounded_String;
+	Request_Size : Natural;
+	Response     : String :=  
+	  "Http/1.1 200 OK"                             & CRLF &
+	  Response_Date                                 & CRLF &
+          "Server: axios"                               & CRLF &
           "Content-Type: text/html; charset=iso-8859-1" & CRLF &
-          "Content-Length: 50" & CRLF & CRLF &
+          "Content-Length: 50"                          & CRLF & CRLF &
+	  
 	  -- Message body
-          "<html><body><h1>Hello world " & Integer'Image(This.Port_Number)  &"</h1></body></html>";
+          "<html><body><h1>Hello world "  & 
+	  Integer'Image(This.Port_Number) &
+	  "</h1></body></html>";
+
       begin
-        -- Ada.Text_IO.Put_Line(This.Tiny_Name & ": " & Message);
+        -- Read the request body 
+        loop
+          Ada.Streams.Read(Channel.All, Data, Offset); 
+
+	  exit when Offset = 0;
+
+	  for I in 1 .. Offset loop
+	    Ada.Strings.Unbounded.Append
+	     (Source   => Request, 
+	      New_Item => Character'Val(Data(I)));  
+	  end loop;
+
+	  Ada.Text_IO.Put_Line("derp");
+	
+	  exit when Ada.Strings.Unbounded.To_String(
+	    Ada.Strings.Unbounded.Tail(Request, 4, ' ')) 
+	    = CRLF & CRLF;
+
+	  Ada.Text_IO.Put_Line("herp");
+
+	end loop;
+
+        Ada.Text_IO.Put_Line(
+	  Ada.Strings.Unbounded.To_String(Request));
+
 	-- Handler for requests should go here.
         -- Temp response
 	String'Write(Channel, Response);
+	
       end;
       Close_Socket(Socket);
     end loop;
@@ -81,6 +117,7 @@ package body Listeners is
   exception when E : others => 
     Ada.Text_IO.Put_Line
       (Exception_Name(E) & Exception_Message(E));
+
   end Listen;
 
   procedure Set_Port(port : Integer) is 

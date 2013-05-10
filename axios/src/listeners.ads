@@ -5,14 +5,21 @@
 -- This should delegate the request to some handler, and 
 -- execute the proper logic.
 with 
-  Ada.Text_IO,
-  Ada.Strings.Unbounded,
-  GNAT.Sockets,
-  Ada.Exceptions; 
+  Ada.Text_IO
+, Ada.Strings.Unbounded
+, Ada.Exceptions
+, Ada.Streams
+, GNAT.Sockets
+;
 
 use 
-  Ada.Exceptions,
-  GNAT.Sockets; 
+  Ada.Exceptions
+, GNAT.Sockets; 
+
+use type 
+  Ada.Streams.Stream_Element_Count
+, Ada.Streams.Stream_Element_Array
+;
 
 package Listeners is 
 
