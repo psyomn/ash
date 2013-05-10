@@ -31,7 +31,7 @@ procedure Main is
     WS_Root_Path => Ada.Strings.Unbounded.To_Unbounded_String("./www1/"));
   
   l2 : Listener_Access := 
-    new Listeners.Listener'(Port_Number  => 6000, 
+    new Listeners.Listener'(Port_Number  => 8000, 
     Host_Name    => Ada.Strings.Unbounded.To_Unbounded_String("localhost"),
     Shutdown     => false,
     WS_Root_Path => Ada.Strings.Unbounded.To_Unbounded_String("./www2/"));

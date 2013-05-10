@@ -2,38 +2,85 @@
 -- @date   Mon May 6 2013
 -- Implementation for the listener
 
-with GNAT.Sockets;
-
 package body Listeners is
 
   -- Print to the command line information such
   -- as host and port number
-  procedure Print_Info(Listener_Handle : Listener) is 
+  procedure Print_Info(This : Listener) is 
   begin
     Ada.Text_IO.Put_Line("Listener Info: ");
     Ada.Text_IO.Put_Line("Port Number : " 
-      & Integer'Image(Listener_Handle.Port_Number));
+      & Integer'Image(This.Port_Number));
     Ada.Text_IO.Put_Line("Hostname    : " 
-      & Ada.Strings.Unbounded.To_String(Listener_Handle.Host_Name));
+      & Ada.Strings.Unbounded.To_String(This.Host_Name));
     Ada.Text_IO.Put_Line("Root Dir.   : "
-      & Ada.Strings.Unbounded.To_String(Listener_Handle.WS_Root_Path));
+      & Ada.Strings.Unbounded.To_String(This.WS_Root_Path));
     Ada.Text_IO.New_Line;
   end Print_Info;
 
+  function Tiny_Name(This : Listener)
+  return String is 
+    Name : String := 
+      Ada.Strings.Unbounded.To_String(This.Host_Name) & "@" &
+      Integer'Image(This.Port_Number);
+  begin
+    return Name;
+  end Tiny_Name;
+
+  -- Return the date as string in the format specified by the RFC2616 manual.
+  function Response_Date
+  return String is 
+  begin
+    return "Date: Tue, 14 Dec 2010 10:48:45 GMT";
+  end Response_Date;
+
   -- Listen forever. Graceful shutdown if it receives some signal.
   procedure Listen(This : Listener) is
-    Socket  : GNAT.Sockets.Socket_Type;
-    Server  : GNAT.Sockets.Socket_Type;
-    Address : GNAT.Sockets.Sock_Addr_Type;
-    Channel : GNAT.Sockets.Stream_Access;
+    Socket   : Socket_Type;
+    Server   : Socket_Type;
+    Address  : Sock_Addr_Type;
+    Channel  : Stream_Access;
+    The_Host : String := Ada.Strings.Unbounded.To_String(This.Host_Name);
   begin
-    Ada.Text_IO.Put_Line("Started listening [" 
-      & Ada.Strings.Unbounded.To_String(This.Host_Name) & "@" 
-      & Integer'Image(This.Port_Number) &"]");
 
-    while This.Shutdown loop
-      null;
+    Address.Addr := Addresses (Get_Host_By_Name (The_Host), 1);
+    Address.Port := Port_Type(This.Port_Number);
+    Create_Socket(Server); 
+
+    Set_Socket_Option(Server, Socket_Level, (Reuse_Address, True));
+    Bind_Socket(Server, Address);
+    Listen_Socket(Server); 
+    -- pass to other socket.
+    Ada.Text_IO.Put_Line("Successfully listening on: " & Port_Type'Image(Address.Port));
+
+    while not This.Shutdown loop
+      Accept_Socket(Server, Socket, Address); 
+      Channel := Stream(Socket);
+      declare
+        CRLF     : String := ASCII.CR & ASCII.LF; 
+	-- NOTE: this makes the program crash with a STORAGE_ERROR exception. 
+	--       Other sources recommend to increase the heap size.
+        --Message  : String := String'Input(Channel);
+	Response : String :=  
+	  "Http/1.1 200 OK" & CRLF &
+	  -- Response_Date     & CRLF &
+          "Server: axios"   & CRLF &
+          "Content-Type: text/html; charset=iso-8859-1" & CRLF &
+          "Content-Length: 50" & CRLF & CRLF &
+	  -- Message body
+          "<html><body><h1>Hello world " & Integer'Image(This.Port_Number)  &"</h1></body></html>";
+      begin
+        -- Ada.Text_IO.Put_Line(This.Tiny_Name & ": " & Message);
+	-- Handler for requests should go here.
+        -- Temp response
+	String'Write(Channel, Response);
+      end;
+      Close_Socket(Socket);
     end loop;
+
+  exception when E : others => 
+    Ada.Text_IO.Put_Line
+      (Exception_Name(E) & Exception_Message(E));
   end Listen;
 
   procedure Set_Port(port : Integer) is 
