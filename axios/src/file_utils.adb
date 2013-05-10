@@ -33,24 +33,34 @@ package body File_Utils is
         (Exception_Name(E) & Exception_Message(E));
   end Write;
 
+  -- Read a file by name, and then return the file text contents, lines
+  -- delimited by a ASCII.LF
   function Read(File_Name : String)
   return String is 
     The_File_Mode : Ada.Text_IO.File_Mode := Ada.Text_IO.In_File;
     The_File      : Ada.Text_IO.File_Type;
-    Size          : 
+    Contents      : Ada.Strings.Unbounded.Unbounded_String;
   begin 
     Ada.Text_IO.Open
       (File => The_File,
        Mode => The_File_Mode,
        Name => File_Name);
 
+    while not Ada.Text_IO.End_Of_File (The_File) loop  
+      declare
+        Line : String := Ada.Text_IO.Get_Line(The_File);
+      begin 
+        Ada.Strings.Unbounded.Append(Source => Contents, New_Item => Line(1..Line'Last));
+        Ada.Strings.Unbounded.Append(Source => Contents, New_Item => ASCII.LF);
+      end;
+    end loop;
 
     Ada.Text_IO.Close(File => The_File);
+    return Ada.Strings.Unbounded.To_String(Contents) ;
 
     exception when E : others => 
       Ada.Text_IO.Put_Line
         (Exception_Name(E) & Exception_Message(E));
-    return "Hello there" ;
   end Read; 
 
   -- Append to file by given name.

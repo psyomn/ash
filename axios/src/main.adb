@@ -23,7 +23,7 @@ procedure Main is
     accept Stop;
   end Launch_Listener;
 
-  -- listeners
+  -- listeners. Notice the '
   l1 : Listener_Access := 
     new Listeners.Listener'(Port_Number  => 3000, 
     Host_Name    => Ada.Strings.Unbounded.To_Unbounded_String("localhost"),
@@ -44,8 +44,6 @@ begin
   -- Do whatever
   lt1.Start;
   lt2.Start;
-
-  File_Utils.Write("my_file.txt", "Please be a nice person.");
 
   -- On Graceful end 
   lt1.Stop;
