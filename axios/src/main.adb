@@ -40,12 +40,16 @@ procedure Main is
   lt1 : Launch_Listener(L => l1);
   lt2 : Launch_Listener(L => l2);
 
+  str : String(1..2000);
+
 begin
-  -- Do whatever
+  -- Start listening for connections.
   lt1.Start;
   lt2.Start;
 
-  File_Utils.Write("my_file.txt", "Please be a nice person.");
+  Ada.Text_IO.Put_Line("Trying to read...");
+  str := File_Utils.Read("my_file.txt");
+  Ada.Text_IO.Put_Line("Contents: " & str);
 
   -- On Graceful end 
   lt1.Stop;
