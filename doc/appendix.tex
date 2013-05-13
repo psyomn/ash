@@ -37,14 +37,18 @@ Regular expressions don't quite exist in the Ada programming language. However t
 \subsection{Random Notes}
 Some other miscellanious random notes, that might help in the future. 
 
-\subsubsection{Weird Compiler Errors}
-Presented are a list of compiler errors or warnings that might confuse the user. 
-
-\paragraph{} 
+%% TODO this is good, but have no material for this
+%% 
+%% \subsubsection{Weird Compiler Errors}
+%% Presented are a list of compiler errors or warnings that might confuse the user. 
+%% 
+%% \paragraph{} 
 
 \subsubsection{ADS / ADB file location}
 If the \textit{gcc-ada} compiler is being used, the specification and body files can typically be found in the following directory
 $$ /usr/lib/gcc/\$MACHTYPE/\$GCC-VERSION/adainclude/ $$
+On another platform, namely \textit{Lubuntu}, the absolute path included another directory right before the ada include one.
+$$ /usr/lib/gcc/\$MACHTYPE/\$GCC-VERSION/rts-native/adainclude/ $$
 
 \subsubsection{Sanity Checking}
 I wanted to test out if things were working properly every now and then. Here are a few commands that I used in order to do this.

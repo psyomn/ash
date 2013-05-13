@@ -23,7 +23,7 @@ procedure Main is
     accept Stop;
   end Launch_Listener;
 
-  -- listeners
+  -- listeners. Notice the '
   l1 : Listener_Access := 
     new Listeners.Listener'(Port_Number  => 3000, 
     Host_Name    => Ada.Strings.Unbounded.To_Unbounded_String("localhost"),
@@ -31,7 +31,7 @@ procedure Main is
     WS_Root_Path => Ada.Strings.Unbounded.To_Unbounded_String("./www1/"));
   
   l2 : Listener_Access := 
-    new Listeners.Listener'(Port_Number  => 6000, 
+    new Listeners.Listener'(Port_Number  => 8000, 
     Host_Name    => Ada.Strings.Unbounded.To_Unbounded_String("localhost"),
     Shutdown     => false,
     WS_Root_Path => Ada.Strings.Unbounded.To_Unbounded_String("./www2/"));
@@ -46,10 +46,6 @@ begin
   -- Start listening for connections.
   lt1.Start;
   lt2.Start;
-
-  Ada.Text_IO.Put_Line("Trying to read...");
-  str := File_Utils.Read("my_file.txt");
-  Ada.Text_IO.Put_Line("Contents: " & str);
 
   -- On Graceful end 
   lt1.Stop;

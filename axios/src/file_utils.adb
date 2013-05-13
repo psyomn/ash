@@ -35,27 +35,31 @@ package body File_Utils is
   end Write;
 
   -- This will read the full contents of a given file.
+  -- Read a file by name, and then return the file text contents, lines
+  -- delimited by a ASCII.LF
   function Read(File_Name : String)
   return String is 
     The_File_Mode : Ada.Text_IO.File_Mode := Ada.Text_IO.In_File;
     The_File      : Ada.Text_IO.File_Type;
     Return_Value  : Ada.Strings.Unbounded.Unbounded_String;
+    Contents      : Ada.Strings.Unbounded.Unbounded_String;
   begin 
     Ada.Text_IO.Open
       (File => The_File,
        Mode => The_File_Mode,
        Name => File_Name);
 
-    while not Ada.Text_IO.End_Of_File (The_File) loop
+    while not Ada.Text_IO.End_Of_File (The_File) loop  
       declare
         Line : String := Ada.Text_IO.Get_Line(The_File);
-      begin
-        Ada.Strings.Unbounded.Append
-          (Source => Return_Value, New_Item => Line(1..Line'Last));
+      begin 
+        Ada.Strings.Unbounded.Append(Source => Contents, New_Item => Line(1..Line'Last));
+        Ada.Strings.Unbounded.Append(Source => Contents, New_Item => ASCII.LF);
       end;
     end loop;
 
     Ada.Text_IO.Close(File => The_File);
+    return Ada.Strings.Unbounded.To_String(Contents) ;
 
     return Ada.Strings.Unbounded.To_String(Return_Value) ;
   end Read; 

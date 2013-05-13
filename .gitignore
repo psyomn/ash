@@ -13,4 +13,4 @@ core.synctex.gz
 *.swp
 *.aux
 *.pdf
-
+*.out

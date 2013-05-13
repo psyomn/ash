@@ -8,7 +8,6 @@ use type Ada.Streams.Stream_Element_Count;
 -- Thanks to 
 -- http://en.wikibooks.org/wiki/Ada_Programming/Libraries/Ada.Streams#Read_attribute
 procedure Vcv is
-
    Client  : Socket_Type;
    Address : Sock_Addr_Type;
    Channel : Stream_Access; 
@@ -17,9 +16,7 @@ procedure Vcv is
    Send   : String := CRLF & CRLF;
    Offset : Ada.Streams.Stream_Element_Count;
    Data   : Ada.Streams.Stream_Element_Array (1 .. 256);
-
 begin
-
    GNAT.Sockets.Initialize;  -- initialize a specific package
    Create_Socket (Client);
    Address.Addr := Addresses (Get_Host_By_Name("www.google.com"));
@@ -37,5 +34,4 @@ begin
          Ada.Text_IO.Put (Character'Val (Data (I)));
       end loop;
    end loop;
-
 end Vcv;
