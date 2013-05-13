@@ -3,6 +3,8 @@
 -- Implementation for the listener
 -- @note Thanks to:
 -- http://en.wikibooks.org/wiki/Ada_Programming/Libraries/Ada.Streams/Example
+-- @note Also good to know why using IO Streams will not work with this sort of thing.
+-- http://stackoverflow.com/questions/7540064/simple-http-server-in-ruby-using-tcpserver
 
 package body Listeners is
 
@@ -63,7 +65,7 @@ package body Listeners is
       Channel := Stream(Socket);
       declare
         CRLF         : String := ASCII.CR & ASCII.LF; 
-        Data         : Ada.Streams.Stream_Element_Array(1..256);
+        Data         : Ada.Streams.Stream_Element_Array(1..127);
         Offset       : Ada.Streams.Stream_Element_Count;
 
         Request      : Ada.Strings.Unbounded.Unbounded_String;
@@ -79,6 +81,8 @@ package body Listeners is
           "<html><body><h1>Hello world "  & 
 	  Integer'Image(This.Port_Number) &
 	  "</h1></body></html>";
+	
+	Counter : Natural := 0;
 
       begin
         -- Read the request body 
@@ -91,16 +95,24 @@ package body Listeners is
 	    Ada.Strings.Unbounded.Append
 	     (Source   => Request, 
 	      New_Item => Character'Val(Data(I)));  
+	    Ada.Text_IO.Put_Line("[" & 
+	    Natural'Image(Counter)
+	    & "]" & Ada.Streams.Stream_Element'Image(Data(I)) 
+	    & " --> " & Character'Val(Data(I)));
+	    Counter := Counter + 1;
+
+            if Ada.Strings.Unbounded.To_String(
+	      Ada.Strings.Unbounded.Tail(Request, 4, ' ')) = CRLF & CRLF then
+	      Ada.Text_IO.Put_Line("Found CRLF + CRLF");
+	    elsif Ada.Strings.Unbounded.To_String(
+	      Ada.Strings.Unbounded.Tail(Request, 2, ' ')) = CRLF then
+	      Ada.Text_IO.Put_Line("Found CRLF + CRLF"); 
+	    end if;
 	  end loop;
 
-	  Ada.Text_IO.Put_Line("derp");
-	
 	  exit when Ada.Strings.Unbounded.To_String(
 	    Ada.Strings.Unbounded.Tail(Request, 4, ' ')) 
 	    = CRLF & CRLF;
-
-	  Ada.Text_IO.Put_Line("herp");
-
 	end loop;
 
         Ada.Text_IO.Put_Line(
