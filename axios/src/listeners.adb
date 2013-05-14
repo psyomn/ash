@@ -5,6 +5,8 @@
 -- http://en.wikibooks.org/wiki/Ada_Programming/Libraries/Ada.Streams/Example
 -- @note Also good to know why using IO Streams will not work with this sort of thing.
 -- http://stackoverflow.com/questions/7540064/simple-http-server-in-ruby-using-tcpserver
+-- @note Using Ada get_line for unknown input size
+-- http://www.radford.edu/~nokie/classes/320/stringio.html
 
 package body Listeners is
 
