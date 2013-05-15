@@ -1,8 +1,6 @@
 -- @author Simon Symeonidis
 -- @date   Mon May 6 2013
 -- Implementation for the listener
--- @note Thanks to:
--- http://en.wikibooks.org/wiki/Ada_Programming/Libraries/Ada.Streams/Example
 -- @note Also good to know why using IO Streams will not work with this sort of thing.
 -- http://stackoverflow.com/questions/7540064/simple-http-server-in-ruby-using-tcpserver
 -- @note Using Ada get_line for unknown input size
@@ -62,11 +60,13 @@ package body Listeners is
      ("Successfully listening on: " & 
       Port_Type'Image(Address.Port));
 
+    Listening_Loop :
     while not This.Shutdown loop
       Accept_Socket(Server, Socket, Address); 
       Channel := Stream(Socket);
       declare
         CRLF         : String := ASCII.CR & ASCII.LF; 
+	LF           : Character := ASCII.LF; 
         Data         : Ada.Streams.Stream_Element_Array(1..127);
         Offset       : Ada.Streams.Stream_Element_Count;
 
@@ -85,48 +85,42 @@ package body Listeners is
 	  "</h1></body></html>";
 	
 	Counter : Natural := 0;
+	Chara   : Character;
+
+	Buffer_Size : constant := 2000;
+	Buffer      : String(1..Buffer_Size);
+	Last        : Positive := Buffer_Size;
+
+	RTime_Start : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+	RTime_Stop  : Ada.Real_Time.Time;
+	RTime_Total : Ada.Real_Time.Time_Span;
 
       begin
         -- Read the request body 
-        loop
-          Ada.Streams.Read(Channel.All, Data, Offset); 
+	Read_Request : loop
+          Character'Read(Channel, Chara);
+	  Ada.Strings.Unbounded.Append(
+	    Source   => Request, 
+	    New_Item => Chara);
 
-	  exit when Offset = 0;
+          -- TODO try switching to counting CRLFs
+	  exit when
+	    Ada.Strings.Unbounded.To_String(
+              Ada.Strings.Unbounded.Tail(
+                Request, 4, ' ')) = CRLF & CRLF;
+        end loop Read_Request;
 
-	  for I in 1 .. Offset loop
-	    Ada.Strings.Unbounded.Append
-	     (Source   => Request, 
-	      New_Item => Character'Val(Data(I)));  
-	    Ada.Text_IO.Put_Line("[" & 
-	    Natural'Image(Counter)
-	    & "]" & Ada.Streams.Stream_Element'Image(Data(I)) 
-	    & " --> " & Character'Val(Data(I)));
-	    Counter := Counter + 1;
-
-            if Ada.Strings.Unbounded.To_String(
-	      Ada.Strings.Unbounded.Tail(Request, 4, ' ')) = CRLF & CRLF then
-	      Ada.Text_IO.Put_Line("Found CRLF + CRLF");
-	    elsif Ada.Strings.Unbounded.To_String(
-	      Ada.Strings.Unbounded.Tail(Request, 2, ' ')) = CRLF then
-	      Ada.Text_IO.Put_Line("Found CRLF + CRLF"); 
-	    end if;
-	  end loop;
-
-	  exit when Ada.Strings.Unbounded.To_String(
-	    Ada.Strings.Unbounded.Tail(Request, 4, ' ')) 
-	    = CRLF & CRLF;
-	end loop;
-
-        Ada.Text_IO.Put_Line(
-	  Ada.Strings.Unbounded.To_String(Request));
+	RTime_Stop  := Ada.Real_Time.Clock;
+	RTime_Total := RTime_Stop - RTime_Start;
 
 	-- Handler for requests should go here.
         -- Temp response
 	String'Write(Channel, Response);
 	
       end;
+      Free(Channel);
       Close_Socket(Socket);
-    end loop;
+    end loop Listening_Loop;
 
   exception when E : others => 
     Ada.Text_IO.Put_Line
@@ -134,8 +128,4 @@ package body Listeners is
 
   end Listen;
 
-  procedure Set_Port(port : Integer) is 
-  begin
-    Ada.Text_IO.Put_Line("Placeholder...");
-  end Set_Port;
 end Listeners;
