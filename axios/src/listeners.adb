@@ -113,6 +113,10 @@ package body Listeners is
 	RTime_Stop  := Ada.Real_Time.Clock;
 	RTime_Total := RTime_Stop - RTime_Start;
 
+        Ada.Text_IO.Put_Line(
+	  Ada.Strings.Unbounded.To_String(
+	    Request));
+
 	-- Handler for requests should go here.
         -- Temp response
 	String'Write(Channel, Response);

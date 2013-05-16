@@ -14,6 +14,7 @@ with
 , Ada.Real_Time
 , GNAT.Sockets
 , System.Task_Primitives.Operations
+, Request_Helpers
 ;
 
 use 
