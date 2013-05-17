@@ -66,61 +66,52 @@ package body Listeners is
       Channel := Stream(Socket);
       declare
         CRLF         : String := ASCII.CR & ASCII.LF; 
-	LF           : Character := ASCII.LF; 
+        LF           : Character := ASCII.LF; 
         Data         : Ada.Streams.Stream_Element_Array(1..127);
         Offset       : Ada.Streams.Stream_Element_Count;
 
         Request      : Ada.Strings.Unbounded.Unbounded_String;
-	Request_Size : Natural;
-	Response     : String :=  
-	  "Http/1.1 200 OK"                             & CRLF &
-	  Response_Date                                 & CRLF &
-          "Server: axios"                               & CRLF &
-          "Content-Type: text/html; charset=iso-8859-1" & CRLF &
-          "Content-Length: 50"                          & CRLF & CRLF &
-	  
-	  -- Message body
-          "<html><body><h1>Hello world "  & 
-	  Integer'Image(This.Port_Number) &
-	  "</h1></body></html>";
-	
-	Counter : Natural := 0;
-	Chara   : Character;
+        Request_Size : Natural;
+        Response     : String := Response_Helpers.Make_Response("derp");
 
-	Buffer_Size : constant := 2000;
-	Buffer      : String(1..Buffer_Size);
-	Last        : Positive := Buffer_Size;
+        Counter      : Natural := 0;
+        Chara        : Character;
 
-	RTime_Start : Ada.Real_Time.Time := Ada.Real_Time.Clock;
-	RTime_Stop  : Ada.Real_Time.Time;
-	RTime_Total : Ada.Real_Time.Time_Span;
+        Buffer_Size  : constant := 2000;
+        Buffer       : String(1..Buffer_Size);
+        Last         : Positive := Buffer_Size;
+
+        RTime_Start  : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+        RTime_Stop   : Ada.Real_Time.Time;
+        RTime_Total  : Ada.Real_Time.Time_Span;
 
       begin
         -- Read the request body 
-	Read_Request : loop
-          Character'Read(Channel, Chara);
-	  Ada.Strings.Unbounded.Append(
-	    Source   => Request, 
-	    New_Item => Chara);
+        
+        Read_Request : 
+        loop
+        Character'Read(Channel, Chara);
+        Ada.Strings.Unbounded.Append(
+          Source   => Request, 
+          New_Item => Chara);
 
           -- TODO try switching to counting CRLFs
-	  exit when
-	    Ada.Strings.Unbounded.To_String(
+          exit when
+            Ada.Strings.Unbounded.To_String(
               Ada.Strings.Unbounded.Tail(
                 Request, 4, ' ')) = CRLF & CRLF;
         end loop Read_Request;
 
-	RTime_Stop  := Ada.Real_Time.Clock;
-	RTime_Total := RTime_Stop - RTime_Start;
+        RTime_Stop  := Ada.Real_Time.Clock;
+        RTime_Total := RTime_Stop - RTime_Start;
 
         Ada.Text_IO.Put_Line(
-	  Ada.Strings.Unbounded.To_String(
-	    Request));
+          Ada.Strings.Unbounded.To_String(
+            Request));
 
-	-- Handler for requests should go here.
+        -- Handler for requests should go here.
         -- Temp response
-	String'Write(Channel, Response);
-	
+        String'Write(Channel, Response);
       end;
       Free(Channel);
       Close_Socket(Socket);
