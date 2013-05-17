@@ -1,5 +1,5 @@
 -- @author Simon Symeonidis 
--- @date Fri May  3 14:53:08 EDT 2013
+-- @date Fri May  3
 with Ada.Text_IO; use Ada.Text_IO; 
 with Ada.Strings.Unbounded;
 
