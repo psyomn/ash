@@ -106,7 +106,8 @@ package body Listeners is
         String'Write(Channel, 
 	  Transaction_Handlers.Handle_Request(
 	    Ada.Strings.Unbounded.To_String(
-              Request)));
+              Request), Ada.Strings.Unbounded.To_String(
+	        This.WS_Root_Path)));
 	  
       end;
       Free(Channel);

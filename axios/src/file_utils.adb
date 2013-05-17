@@ -29,9 +29,9 @@ package body File_Utils is
 	 Item => Contents);
     Ada.Text_IO.Close(File => The_File);
     
-    exception when E : others => 
-      Ada.Text_IO.Put_Line
-        (Exception_Name(E) & Exception_Message(E));
+  exception when E : others => 
+    Ada.Text_IO.Put_Line
+      (Exception_Name(E) & Exception_Message(E));
   end Write;
 
   -- This will read the full contents of a given file.
@@ -41,7 +41,6 @@ package body File_Utils is
   return String is 
     The_File_Mode : Ada.Text_IO.File_Mode := Ada.Text_IO.In_File;
     The_File      : Ada.Text_IO.File_Type;
-    Return_Value  : Ada.Strings.Unbounded.Unbounded_String;
     Contents      : Ada.Strings.Unbounded.Unbounded_String;
   begin 
     Ada.Text_IO.Open
@@ -60,8 +59,10 @@ package body File_Utils is
 
     Ada.Text_IO.Close(File => The_File);
     return Ada.Strings.Unbounded.To_String(Contents) ;
-
-    return Ada.Strings.Unbounded.To_String(Return_Value) ;
+    
+  exception when E : others =>
+    Ada.Text_IO.Put_Line("Warning: A request to a non existant file was made.");
+    return "Error";
   end Read; 
 
   -- Append to file by given name.
