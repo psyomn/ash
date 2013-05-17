@@ -13,7 +13,6 @@ with
 , Ada.Calendar
 , Ada.Real_Time
 , GNAT.Sockets
-, System.Task_Primitives.Operations
 -- user
 , Request_Helpers
 , Response_Helpers

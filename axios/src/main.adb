@@ -40,8 +40,6 @@ procedure Main is
   lt1 : Launch_Listener(L => l1);
   lt2 : Launch_Listener(L => l2);
 
-  str : String(1..2000);
-
 begin
   -- Start listening for connections.
   lt1.Start;

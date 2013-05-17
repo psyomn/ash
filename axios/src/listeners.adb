@@ -67,19 +67,12 @@ package body Listeners is
       declare
         CRLF         : String := ASCII.CR & ASCII.LF; 
         LF           : Character := ASCII.LF; 
-        Data         : Ada.Streams.Stream_Element_Array(1..127);
-        Offset       : Ada.Streams.Stream_Element_Count;
 
         Request      : Ada.Strings.Unbounded.Unbounded_String;
-        Request_Size : Natural;
         Response     : String := Response_Helpers.Make_Response("derp");
 
         Counter      : Natural := 0;
         Chara        : Character;
-
-        Buffer_Size  : constant := 2000;
-        Buffer       : String(1..Buffer_Size);
-        Last         : Positive := Buffer_Size;
 
         RTime_Start  : Ada.Real_Time.Time := Ada.Real_Time.Clock;
         RTime_Stop   : Ada.Real_Time.Time;
@@ -87,7 +80,6 @@ package body Listeners is
 
       begin
         -- Read the request body 
-        
         Read_Request : 
         loop
         Character'Read(Channel, Chara);
@@ -110,6 +102,7 @@ package body Listeners is
             Request));
 
         -- Handler for requests should go here.
+
         -- Temp response
         String'Write(Channel, Response);
       end;
