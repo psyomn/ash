@@ -69,7 +69,6 @@ package body Listeners is
         LF           : Character := ASCII.LF; 
 
         Request      : Ada.Strings.Unbounded.Unbounded_String;
-        Response     : String := Response_Helpers.Make_Response("derp");
 
         Counter      : Natural := 0;
         Chara        : Character;
@@ -103,8 +102,12 @@ package body Listeners is
 
         -- Handler for requests should go here.
 
-        -- Temp response
-        String'Write(Channel, Response);
+        -- Temp response TODO broken
+        String'Write(Channel, 
+	  Transaction_Handlers.Handle_Request(
+	    Ada.Strings.Unbounded.To_String(
+              Request)));
+	  
       end;
       Free(Channel);
       Close_Socket(Socket);

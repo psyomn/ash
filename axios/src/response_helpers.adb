@@ -21,16 +21,11 @@ package body Response_Helpers is
 
   function Make_Response(S : String)
   return String is
-    Test : String := 
-      "<html><body><h1>Hello World</h1>" & 
-      "<p>If you are reading this, then everything" &
-      " is going according as planned.</p>";
-     
   begin
     return
       Headers &
-      Positive'Image(Test'Length) & CRLF & CRLF &
-      Test;
+      Positive'Image(S'Length) & CRLF & CRLF &
+      S;
   end Make_Response;
 
 
