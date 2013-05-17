@@ -1,4 +1,4 @@
-with GNAT.RegEx;
+with GNAT.Regexp;
 -- @author Simon Symeonidis 
 -- @date   Thu May 16 2013
 package Request_Helpers is 
