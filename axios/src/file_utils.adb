@@ -52,8 +52,8 @@ package body File_Utils is
       declare
         Line : String := Ada.Text_IO.Get_Line(The_File);
       begin 
-        Ada.Strings.Unbounded.Append(Source => Contents, New_Item => Line(1..Line'Last));
-        Ada.Strings.Unbounded.Append(Source => Contents, New_Item => ASCII.LF);
+        Ada.Strings.Unbounded.Append(
+          Source => Contents, New_Item => Line(1..Line'Last));
       end;
     end loop;
 
@@ -61,7 +61,8 @@ package body File_Utils is
     return Ada.Strings.Unbounded.To_String(Contents) ;
     
   exception when E : others =>
-    Ada.Text_IO.Put_Line("Warning: A request to a non existant file was made.");
+    Ada.Text_IO.Put_Line("Warning: request to a non existant file was made.");
+    Ada.Text_IO.Put_Line(">> Path: " & File_Name);
     return "Error";
   end Read; 
 
