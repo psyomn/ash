@@ -13,26 +13,26 @@ comes accross it.
 Quick tips
 ----------
 
-* Building the server
+*Building the server*
 
 To build the project you need to go into ./axios and run the following
 
-  gnatmake -P axios.gpr -p -Xmode=release
+    gnatmake -P axios.gpr -p -Xmode=release
 
 Then, go inside the binary directory and run
 
-  ./axios
+    ./axios
 
 Make sure that www1, and www2 exist within the bin directory (that is where
 the static content is served from).
 
-* Building the documentation
+*Building the documentation*
 
 You will need pdflatex, and bibtex to compile the document (and some other
 packages such as listings etc). You simply need to go inside the document 
 directory ./doc and run
 
-  make
+    make
 
 That generates the document. If listings are messed up, run make a few more
 times.
