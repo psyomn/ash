@@ -65,18 +65,16 @@ package body Listeners is
       Accept_Socket(Server, Socket, Address); 
       Channel := Stream(Socket);
       declare
-        CRLF         : String := ASCII.CR & ASCII.LF; 
+        CRLF         : String    := ASCII.CR & ASCII.LF; 
         LF           : Character := ASCII.LF; 
+	Counter      : Integer   := 0;
 
         Request      : Ada.Strings.Unbounded.Unbounded_String;
-
-        Counter      : Natural := 0;
         Chara        : Character;
 
         RTime_Start  : Ada.Real_Time.Time := Ada.Real_Time.Clock;
         RTime_Stop   : Ada.Real_Time.Time;
         RTime_Total  : Ada.Real_Time.Time_Span;
-
       begin
         -- Read the request body 
         Read_Request : 
@@ -86,11 +84,13 @@ package body Listeners is
           Source   => Request, 
           New_Item => Chara);
 
-          -- TODO try switching to counting CRLFs
-          exit when
-            Ada.Strings.Unbounded.To_String(
-              Ada.Strings.Unbounded.Tail(
-                Request, 4, ' ')) = CRLF & CRLF;
+	  if Chara = ASCII.LF or Chara = ASCII.CR then
+	    Counter := Counter + 1;
+	  else -- reset
+	    Counter := 0;
+	  end if;
+
+          exit when Counter = 4; 
         end loop Read_Request;
 
         RTime_Stop  := Ada.Real_Time.Clock;
@@ -108,7 +108,7 @@ package body Listeners is
 	    Ada.Strings.Unbounded.To_String(
               Request), Ada.Strings.Unbounded.To_String(
 	        This.WS_Root_Path)));
-	  
+      
       end;
       Free(Channel);
       Close_Socket(Socket);
@@ -116,7 +116,8 @@ package body Listeners is
 
   exception when E : others => 
     Ada.Text_IO.Put_Line
-      (Exception_Name(E) & Exception_Message(E));
+      ("Listeners, at main listen loop: " & 
+      Exception_Name(E) & Exception_Message(E));
 
   end Listen;
 
