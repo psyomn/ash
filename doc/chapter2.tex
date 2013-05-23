@@ -35,7 +35,15 @@ Notice that some of the flags for the compiler in both release, and debug modes 
 The `-O2' is for optimization, and that is the reason why it is in the release case. We define a Mode\_Type which can either be one of the two literals `debug', and `release' in order to achieve this. 
 
 \subsection{Components}
-We now describe the components of the project. 
+We now describe the components of the project. Figure \ref{fig:system-architecture}
+
+\begin{figure}[hb]
+\centering
+\includegraphics[width=4in]{gfx/system-architecture.png}
+\caption{Overall organization of software components of Axios}
+\label{fig:system-architecture}
+\end{figure}
+
 
 \subsubsection{Listener}
 \paragraph{Specification} Here is the code listing for the listener specification
@@ -46,3 +54,5 @@ We now describe the components of the project.
 
 \section{Testing}
 Testing is achieved by using \textbf{AUnit} in order to do unit testing. 
+
+

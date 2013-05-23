@@ -67,7 +67,7 @@ package body Listeners is
       declare
         CRLF         : String    := ASCII.CR & ASCII.LF; 
         LF           : Character := ASCII.LF; 
-	Counter      : Integer   := 0;
+        Counter      : Integer   := 0;
 
         Request      : Ada.Strings.Unbounded.Unbounded_String;
         Chara        : Character;
@@ -84,11 +84,11 @@ package body Listeners is
           Source   => Request, 
           New_Item => Chara);
 
-	  if Chara = ASCII.LF or Chara = ASCII.CR then
-	    Counter := Counter + 1;
-	  else -- reset
-	    Counter := 0;
-	  end if;
+          if Chara = ASCII.LF or Chara = ASCII.CR then
+            Counter := Counter + 1;
+          else -- reset
+            Counter := 0;
+          end if;
 
           exit when Counter = 4; 
         end loop Read_Request;
@@ -100,14 +100,10 @@ package body Listeners is
           Ada.Strings.Unbounded.To_String(
             Request));
 
-        -- Handler for requests should go here.
-
-        -- Temp response TODO broken
         String'Write(Channel, 
-	  Transaction_Handlers.Handle_Request(
-	    Ada.Strings.Unbounded.To_String(
-              Request), Ada.Strings.Unbounded.To_String(
-	        This.WS_Root_Path)));
+        Transaction_Handlers.Handle_Request(
+          Ada.Strings.Unbounded.To_String(Request),
+            Ada.Strings.Unbounded.To_String(This.WS_Root_Path)));
       
       end;
       Free(Channel);
