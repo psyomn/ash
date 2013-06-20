@@ -36,7 +36,7 @@ package body Listeners is
   function Response_Date
   return String is 
   begin
-    return "Date: Tue, 14 Dec 2010 10:48:45 GMT";
+    return "Date: Tue, 20 Jan 2012 10:48:45 GMT";
   end Response_Date;
 
   -- Listen forever. Graceful shutdown if it receives some signal.
@@ -104,16 +104,16 @@ package body Listeners is
         Transaction_Handlers.Handle_Request(
           Ada.Strings.Unbounded.To_String(Request),
             Ada.Strings.Unbounded.To_String(This.WS_Root_Path)));
-      
+
+      exception when E : others => 
+        Ada.Text_IO.Put_Line
+          ("Listeners, at main listen loop: " & 
+          Exception_Name(E) & Exception_Message(E));
+     
       end;
       Free(Channel);
       Close_Socket(Socket);
     end loop Listening_Loop;
-
-  exception when E : others => 
-    Ada.Text_IO.Put_Line
-      ("Listeners, at main listen loop: " & 
-      Exception_Name(E) & Exception_Message(E));
 
   end Listen;
 
