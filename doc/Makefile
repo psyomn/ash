@@ -9,7 +9,7 @@ all: pdf
 
 pdf:
 	$(TEXER) $(OUTPUT_FLAG) core.tex 
-	cd $(OUTPUT_DIR); $(BIBC) core; cd ..
+	cd $(OUTPUT_DIR); $(BIBC) core;
 	$(TEXER) $(OUTPUT_FLAG) core.tex
 	mv $(OUTPUT_DIR)core.pdf $(TARGET).pdf
 
