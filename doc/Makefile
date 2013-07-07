@@ -9,6 +9,7 @@ all: pdf
 
 pdf:
 	$(TEXER) $(OUTPUT_FLAG) core.tex 
+	cp -u mybib.bib $(OUTPUT_DIR)
 	cd $(OUTPUT_DIR); $(BIBC) core;
 	$(TEXER) $(OUTPUT_FLAG) core.tex
 	mv $(OUTPUT_DIR)core.pdf $(TARGET).pdf
