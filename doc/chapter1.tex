@@ -1,8 +1,13 @@
 \section{Topics of interest}
-Here we discuss in a little more detail the previously outlined topics. These topics offer us a concise and detailed tests to investigate the the Ada 2012 progrqamming language, along with other tools that can be used to supplement and extend future projects. We will be looking at the following aspects:
+Here we discuss in a little more detail the previously outlined topics. These
+topics offer us a concise and detailed tests to investigate the the Ada 2012
+progrqamming language, along with other tools that can be used to supplement
+and extend future projects. We will be looking at the following aspects:
 \begin{itemize}
-\item{The Ada2012} programming language (Language structure, strengths, weaknesses, etc)
-\item{The Ada2012 Toolchain} The \textbf{gnat} compiler, the project manager files (gpr)
+\item{The Ada2012} programming language (Language structure, strengths,
+weaknesses, etc)
+\item{The Ada2012 Toolchain} The \textbf{gnat} compiler, the project manager
+files (gpr)
 \item{AUnit} for a unit testing platform
 \end{itemize}
 
@@ -16,7 +21,10 @@ therefore will provide some insight on how the language and application will
 behave on different platforms. 
 
 \subsection{Cross Platform Filesystem Support}
-To programmers that have used languages that do not require virtual machines, concerns for cross platform availability of an application, more often arise. This case study will use some simple filesystem operations to indicate what we may and may not do with the language. We will investigate how:
+To programmers that have used languages that do not require virtual machines,
+concerns for cross platform availability of an application, more often arise.
+This case study will use some simple filesystem operations to indicate what we
+may and may not do with the language. We will investigate how:
 \begin{itemize}
   \item Location to resources are handled
   \item Permissions for inodes are handled
@@ -35,12 +43,20 @@ browser such as \textit{Firefox} or \textit{Chromium}.
 
 For the reader we extract the definitions and behaviour of these four methods.
 \subsubsection{Overview of Http Protocol}
-The Http protocol is a text, request-response protocol. The RFC2616 specification is quite detailed, but we will be implementing a very small subset of the specification for this case study.
+The Http protocol is a text, request-response protocol. The RFC2616
+specification is quite detailed, but we will be implementing a very small
+subset of the specification for this case study.
 
-The Http version we are concerned with is \textbf{1.1}. There exists indempodent and non indempodent methods in the Http specification. 
+The Http version we are concerned with is \textbf{1.1}. There exists
+indempodent and non indempodent methods in the Http specification. 
 
 % TODO: Not sure if I want this paragraph (or possible rewriting required)
-GET is described as an indempodent method. That is, if a request is being made with the same specific set of parameters, then the response should be the same each time that request is repeated. For example, if we had a function such as $ f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve `2'. We present the following table, which describes the methods we will be implementing:
+GET is described as an indempodent method. That is, if a request is being made
+with the same specific set of parameters, then the response should be the same
+each time that request is repeated. For example, if we had a function such as $
+f(x) = x + 1 $, then each time we provided $ x = 1 $ we should always retrieve
+`2'. We present the following table, which describes the methods we will be
+implementing:
 \\
 \begin{table} 
 \begin{center}
@@ -58,7 +74,9 @@ DELETE & Indempondent \\
 \caption{HTTP Method Indempodency}
 \end{table}
 \subsubsection{HEAD}
-This Http method requests the header fields of an html document. The message body is not to be retrieved. Here is an example of what http headers look like. The definition is taken straight out of the manual:  
+This Http method requests the header fields of an html document. The message
+body is not to be retrieved. Here is an example of what http headers look like.
+The definition is taken straight out of the manual:  
 \lstinputlisting[caption=Header Definition,language=]{./src/misc/header-definition.txt}
 
 Here is a more practical example. These headers are retrieved from \textit{www.google.ca}:
@@ -68,8 +86,11 @@ And this is the expected html response definition from a successful request.
 \lstinputlisting[caption=Http Response,language=]{./src/misc/http-response.txt}
 
 \subsubsection{GET} 
-A \textbf{GET} method is defined in the specification, to be used for operations that require \textbf{reading} information. On the server side, this should not tamper with the resources. 
-A get request requires \textbf{Request-Line} field to be sent. It is up to the server to look for the resource requested, and send the response afterwards.
+A \textbf{GET} method is defined in the specification, to be used for
+operations that require \textbf{reading} information. On the server side, this
+should not tamper with the resources. 
+A get request requires \textbf{Request-Line} field to be sent. It is up to the
+server to look for the resource requested, and send the response afterwards.
 
 Taken directly from the manual, here is a demonstration of what the GET request looks like, when ``accessing www.w3.org'':
 \lstinputlisting[caption=Http Get Request,language=]{./src/misc/get-request.txt}
