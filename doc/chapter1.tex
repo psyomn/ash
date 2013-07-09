@@ -35,13 +35,14 @@ A topic that I have came accross in programming languages that is somewhat
 interesting to see in implementation, are protocols. Notably \textbf{Erlang} 
 makes this a breeze. Investigating this in Ada will be interesting. 
 
-For this small project, we'll be implementing 5 parts of the Http protocol. 
-Namely the HEAD, GET, POST, PUT and DELETE methods. We refer to the RFC2616 manual \cite{RFC2616}
-for the definition of behaviours of these methods. Once they are implemented in
-this case study using Ada, the project shall be tested by using any mainstream 
-browser such as \textit{Firefox} or \textit{Chromium}.
+For this small project, we'll be implementing 5 parts of the Http protocol.
+Namely the HEAD, GET, POST, PUT and DELETE methods. We refer to the RFC2616
+manual \cite{RFC2616} for the definition of behaviours of these methods. Once
+they are implemented in this case study using Ada, the project shall be tested
+by using any mainstream browser such as \textit{Firefox} or \textit{Chromium}.
 
 For the reader we extract the definitions and behaviour of these four methods.
+
 \subsubsection{Overview of Http Protocol}
 The Http protocol is a text, request-response protocol. The RFC2616
 specification is quite detailed, but we will be implementing a very small
@@ -92,37 +93,62 @@ should not tamper with the resources.
 A get request requires \textbf{Request-Line} field to be sent. It is up to the
 server to look for the resource requested, and send the response afterwards.
 
-Taken directly from the manual, here is a demonstration of what the GET request looks like, when ``accessing www.w3.org'':
+Taken directly from the manual, here is a demonstration of what the GET request
+looks like, when ``accessing www.w3.org'':
 \lstinputlisting[caption=Http Get Request,language=]{./src/misc/get-request.txt}
 
 \subsubsection{POST} \label{http:axios-post}
-POST is the non-indempodent method we mentioned before. This means each time a post request is sent, a resource must be created, always guaranteeing different response, for a same request. An example for this would be creating a book with common data fields such as \textit{author, year, title, etc...}
+POST is the non-indempodent method we mentioned before. This means each time a
+post request is sent, a resource must be created, always guaranteeing different
+response, for a same request. An example for this would be creating a book with
+common data fields such as \textit{author, year, title, etc...}
 
 This is what a typical POST request looks like:
 %TODO post request is required here % 
 
 %TODO not sure if I'll have the time for this sort of thing
-In this case study, we will be using this to write a text file on the server, with the request body as file contents. It would be possible to retrieve these contents later on. 
+In this case study, we will be using this to write a text file on the server,
+with the request body as file contents. It would be possible to retrieve these
+contents later on. 
 
 \subsubsection{PUT}
-PUT is a indempodent method. It is typically used in order to update resources on the sever side. For example, if we wish to update the book re
+PUT is a indempodent method. It is typically used in order to update resources
+on the sever side. For example, if we wish to update the book re
 %TODO put request is required here % 
 
-In this case study we will be using this to change a variable on the server. That way it will be possible to start the server, change this value, and get a response showing that the update was a success. It is quite possible to use this along with AUnit in order unit test these features automatically. 
+In this case study we will be using this to change a variable on the server.
+That way it will be possible to start the server, change this value, and get a
+response showing that the update was a success. It is quite possible to use
+this along with AUnit in order unit test these features automatically. 
 
 \subsubsection{DELETE} 
-DELETE is an indempodent method. It is typically used in order to delete a resource on a website.
-We will be using this to delete resources that are created by the POST definition of Axios (refer to \ref{http:axios-post}).
+DELETE is an indempodent method. It is typically used in order to delete a
+resource on a website.
+We will be using this to delete resources that are created by the POST
+definition of Axios (refer to \ref{http:axios-post}).
 
 \subsection{First Steps}
-The first steps in an Ada application is to define the \textit{project manager  file} for the given project as outlined on the manual \cite{GNATintro}.
+The first steps in an Ada application is to define the \textit{project manager
+file} for the given project as outlined on the manual \cite{GNATintro}.
 
 %% TODO: Need to check if this is indeed the case. 
-The GNAT project file abstracts a lot of the building details into this file. It will take care even about other language builds, meaning that if you wish to create, for example C extensions to the language, you could achieve this easily, as opposed to tedious makefiles. 
+The GNAT project file abstracts a lot of the building details into this file.
+It will take care even about other language builds, meaning that if you wish to
+create, for example C extensions to the language, you could achieve this
+easily, as opposed to tedious makefiles. 
 
-Another added advantage is that GNAT Project Files also take into consideration the file naming conventions. Another automated feature in this file is automatic building of external libraries. There are various other ways to achieve this, either on a makefile level, or alternatively using features in certain SCM tools to clone and build the libraries automatically. 
+Another added advantage is that GNAT Project Files also take into consideration
+the file naming conventions. Another automated feature in this file is
+automatic building of external libraries. There are various other ways to
+achieve this, either on a makefile level, or alternatively using features in
+certain SCM tools to clone and build the libraries automatically. 
 
-A notable feature of the GPR files, is that hierarchical builds are allowed, meaning that if different components require different builds, and different dependencies, that build can be isolated to that specific build alone \cite{GNATintro}. The hierarchical layering of the building process, also exploits a similar aspect to that of a layered software architecture: different layers can be developed at parallel, as could subsystems. 
+A notable feature of the GPR files, is that hierarchical builds are allowed,
+meaning that if different components require different builds, and different
+dependencies, that build can be isolated to that specific build alone
+\cite{GNATintro}. The hierarchical layering of the building process, also
+exploits a similar aspect to that of a layered software architecture: different
+layers can be developed at parallel, as could subsystems. 
 
 \subsubsection{Deployment View}
 The overall view of the system components can be seen in Figure \ref{fig:deployment}. 
