@@ -36,3 +36,9 @@ directory ./doc and run
 
 That generates the document. If listings are messed up, run make a few more
 times.
+
+The document that is provided is not that good, but should give you an overall
+understanding of how everything works. If I had the time and no pressing
+matters I would give a shot at actually finishing this up. 
+
+
