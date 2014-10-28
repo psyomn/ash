@@ -26,6 +26,10 @@ project Axios is
     for Executable ("main.adb")  use "axios";
   end Builder;
 
+  package IDE is
+    for Documentation_Dir use "html";
+  end IDE;
+
   -- To invoke either case, you need to set the -X flag at gnatmake in command
   -- line. You will also notice the Mode_Type type. This constrains the values
   -- of possible valid flags.
