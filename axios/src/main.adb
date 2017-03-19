@@ -1,7 +1,6 @@
-with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Strings.Unbounded;
 
-with Listeners, File_Utils;
+with Listeners;
 
 procedure Main is
   package ASU renames Ada.Strings.Unbounded;
@@ -22,7 +21,7 @@ procedure Main is
     accept Stop;
   end Launch_Listener;
 
-  l1 : Listener_Access :=
+  l1 : constant Listener_Access :=
     new Listeners.Listener'(
       Port_Number  => 3000,
       Host_Name    => ASU.To_Unbounded_String("localhost"),
@@ -36,4 +35,3 @@ begin
   Listener_Task.Start;
   Listener_Task.Stop;
 end Main;
-

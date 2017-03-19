@@ -1,3 +1,5 @@
+with GNAT.Regpat;
+
 package body Request_Helpers is
   function Parse_Request_Type(R : String) return Request_Type is
     First, Last : Positive;
@@ -35,7 +37,7 @@ package body Request_Helpers is
     First, Last : out Positive;
     Found       : out Boolean) is
     Pattern     : constant String := "(\S+)";
-    Compiled    : GNAT.Regpat.Pattern_Matcher := GNAT.Regpat.Compile(Pattern);
+    Compiled    : constant GNAT.Regpat.Pattern_Matcher := GNAT.Regpat.Compile(Pattern);
     Match_Array : GNAT.Regpat.Match_Array(0..1);
   begin
     GNAT.Regpat.Match(Compiled, S, Match_Array);

@@ -1,19 +1,6 @@
-with
-  Ada.Text_IO
-, Ada.Strings.Unbounded
-, Ada.Strings.Unbounded.Text_IO
-, Ada.Exceptions
-, Ada.Streams
-, Ada.Calendar
-, Ada.Real_Time
-, GNAT.Sockets
--- user
-, Transaction_Handlers
-;
-
-use
-  Ada.Exceptions
-, GNAT.Sockets;
+with Ada.Real_Time;
+with Ada.Strings.Unbounded;
+with Ada.Streams;
 
 use type
   Ada.Streams.Stream_Element_Count
@@ -24,7 +11,6 @@ use type
 
 package Listeners is
   package ASU renames Ada.Strings.Unbounded;
-
   type Listener is tagged record
     Port_Number  : Integer range 0 .. 16#ffff#;
     Host_Name    : ASU.Unbounded_String;

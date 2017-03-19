@@ -1,10 +1,11 @@
+with File_Utils;
 with Request_Helpers, Response_Helpers;
 use Request_Helpers, Response_Helpers;
 
 package body Transaction_Handlers is
   function Handle_Request(R : String; Context : String) return String is
-    R_Type : Request_Type := Parse_Request_Type(R);
-    URI    : String := Parse_Request_URI(R);
+    R_Type : constant Request_Type := Parse_Request_Type(R);
+    URI    : constant String := Parse_Request_URI(R);
   begin
     case R_Type is
       when GET =>

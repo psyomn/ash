@@ -16,8 +16,8 @@ package body Response_Helpers is
     package ac  renames Ada.Calendar;
     package gct renames GNAT.Calendar.Time_IO;
     Current_Time : ac.Time;
-    Format       : gct.Picture_String := "%a, %d %B %Y %H:%M:%S EST";
-    Field_Name   : constant String    := "Date: ";
+    Format       : constant gct.Picture_String := "%a, %d %B %Y %H:%M:%S EST";
+    Field_Name   : constant String := "Date: ";
   begin
     Current_Time := ac.Clock;
     return
