@@ -26,7 +26,10 @@ project Axios is
   package Compiler is
     case Mode is
     when "debug" =>
-      for Switches ("Ada") use ("-g", "-gnatv", "-gnatwa", "-gnaty", "-gnaty+ub");
+      for Switches ("Ada") use (
+        "-g", "-gnatv", "-gnatwa", "-gnaty", "-gnaty+ub",
+        "-gnata", "-gnato", "-gnatE"
+      );
     when "release" =>
       for Switches ("Ada") use ("-O2");
     end case;
