@@ -45,10 +45,5 @@ package body File_Utils is
 
       IO.Close (File => The_File);
       return Ada.Strings.Unbounded.To_String (Contents);
-   exception when others =>
-      --  TODO: Probably 404 here
-      IO.Put_Line ("Warning: request to a non existant file was made.");
-      IO.Put_Line (">> Path: " & File_Name);
-      return "Error";
    end Read;
 end File_Utils;
