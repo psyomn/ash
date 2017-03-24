@@ -3,14 +3,18 @@ with Ada.Strings; use Ada.Strings;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 with GNAT.Calendar.Time_IO;
 
+with Common_Utils; use Common_Utils;
+
 package body Response_Helpers is
-   function Headers return String is
+   function Headers (Status : HTTP_Status.Code) return String is
+      Content_Type : constant String :=
+         "Content-Type: text/html; charset=iso-8859-1";
    begin
       return
-        "HTTP/1.0 200 OK"                             & CRLF &
-        Response_Date                                 & CRLF &
-        "Server: axios"                               & CRLF &
-        "Content-Type: text/html; charset=iso-8859-1" & CRLF &
+        First_Header_Line (Status) &
+        Response_Date     & CRLF &
+        "Server: axios"   & CRLF &
+        Content_Type      & CRLF &
         "Content-Length: ";
    end Headers;
 
@@ -18,20 +22,38 @@ package body Response_Helpers is
       package ac  renames Ada.Calendar;
       package gct renames GNAT.Calendar.Time_IO;
       Current_Time : constant ac.Time := ac.Clock;
-      Format       : constant gct.Picture_String
-         := "%a, %d %B %Y %H:%M:%S EST";
+      Format       : constant gct.Picture_String :=
+         "%a, %d %B %Y %H:%M:%S EST";
       Field_Name   : constant String := "Date: ";
    begin
       return Field_Name & gct.Image (Current_Time, Format);
    end Response_Date;
 
-   function Make_Response (S : String) return String is
+   function Make_Response
+     (Status : HTTP_Status.Code; S : String) return String is
       Length       : constant Positive := S'Length;
       Length_Str   : constant String   := Trim (
         Source => Positive'Image (Length),
         Side => Both
       );
    begin
-      return Headers & Length_Str & CRLF & CRLF & S;
+      return
+         Headers (Status) & Length_Str &
+         CRLF &
+         CRLF &
+         S;
    end Make_Response;
+
+   function First_Header_Line (Status : HTTP_Status.Code) return String is
+      use HTTP_Status;
+
+      Status_Str   : constant String :=
+         Integer_To_Trimmed_String (Integer (Status));
+      Message      : constant String := Message_Of_Code (Status);
+      HTTP_Version : constant String := "1.0";
+      Result       : constant String :=
+        "HTTP/" & HTTP_Version & " " & Status_Str & " " & Message & CRLF;
+   begin
+      return Result;
+   end First_Header_Line;
 end Response_Helpers;
