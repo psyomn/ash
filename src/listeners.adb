@@ -1,4 +1,6 @@
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Strings;
+with Ada.Strings.Unbounded;
 with Ada.Exceptions; use Ada.Exceptions;
 with GNAT.Sockets; use GNAT.Sockets;
 
@@ -7,11 +9,12 @@ with Transaction_Handlers;
 
 package body Listeners is
    package IO renames Ada.Text_IO;
+   package ASU renames Ada.Strings.Unbounded;
 
-   procedure Print_Info (This : Listener) is
-      Port_Str : constant String := Integer'Image (This.Port_Number);
-      Host_Str : constant String := ASU.To_String (This.Host_Name);
-      Root_Str : constant String := ASU.To_String (This.WS_Root_Path);
+   procedure Print_Info (L : Listener) is
+      Port_Str : constant String := Integer'Image (L.Port_Number);
+      Host_Str : constant String := L.Host_Name;
+      Root_Str : constant String := L.WS_Root_Path;
    begin
       Put_Line (
         "Listener Info: " &
@@ -20,25 +23,25 @@ package body Listeners is
         "Root Dir.   : " & Root_Str & CRLF & CRLF);
    end Print_Info;
 
-   function Tiny_Name (This : Listener) return String is
+   function Tiny_Name (L : Listener) return String is
       Name : constant String :=
-        ASU.To_String (This.Host_Name) & "@" &
-        Integer'Image (This.Port_Number);
+        (L.Host_Name) & "@" &
+         Integer'Image (L.Port_Number);
    begin
       return Name;
    end Tiny_Name;
 
    --  Listen forever. Graceful shutdown if it receives some signal.
-   procedure Listen (This : Listener) is
+   procedure Listen (L : Listener) is
       Socket   : Socket_Type;
       Server   : Socket_Type;
       Address  : Sock_Addr_Type;
       Channel  : Stream_Access;
-      The_Host : constant String := ASU.To_String (This.Host_Name);
+      The_Host : constant String := L.Host_Name;
       Port_Img : constant String := Port_Type'Image (Address.Port);
    begin
       Address.Addr := Addresses (Get_Host_By_Name (The_Host), 1);
-      Address.Port := Port_Type (This.Port_Number);
+      Address.Port := Port_Type (L.Port_Number);
       Create_Socket (Server);
 
       Set_Socket_Option (Server, Socket_Level, (Reuse_Address, True));
@@ -49,7 +52,7 @@ package body Listeners is
       Put_Line ("Successfully listening on: " & Port_Img);
 
       Listening_Loop :
-      while not This.Shutdown loop
+      while not L.Shutdown loop
          Accept_Socket (Server, Socket, Address);
          Channel := Stream (Socket);
          declare
@@ -77,7 +80,7 @@ package body Listeners is
             String'Write
               (Channel, Transaction_Handlers.Handle_Request (
                  ASU.To_String (Request),
-                 ASU.To_String (This.WS_Root_Path)));
+                 L.WS_Root_Path));
          exception when E : others =>
             IO.Put_Line
               ("Listeners, at main listen loop: " &
