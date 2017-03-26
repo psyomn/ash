@@ -4,6 +4,7 @@ with Ada.Strings.Unbounded;
 
 package body File_Utils is
    package IO renames Ada.Text_IO;
+
    procedure Write (File_Name : String; Contents : String) is
       The_File_Mode : constant IO.File_Mode := Ada.Text_IO.Out_File;
       The_File      : IO.File_Type;
@@ -45,5 +46,9 @@ package body File_Utils is
 
       IO.Close (File => The_File);
       return Ada.Strings.Unbounded.To_String (Contents);
+   exception
+      when Ada.Text_IO.Device_Error =>
+         IO.Close (File => The_File);
+         raise Ada.Text_IO.Device_Error;
    end Read;
 end File_Utils;

@@ -21,4 +21,30 @@ package body Common_Utils is
    begin
       return Result;
    end Header_String;
+
+   procedure Empty_String_Range
+     (S : String;
+      First : out Positive;
+      Last : out Positive) is
+      Current : Character := Character'Val (0);
+   begin
+      First := S'First;
+      Last := S'Last;
+
+      for I in Positive range S'First .. S'Last loop
+         Current := S (I);
+         if Current = Character'Val (0) then
+            First := (if I > 1 then I - 1 else I);
+            exit;
+         end if;
+      end loop;
+
+      for I in Positive range First .. S'Last loop
+         Current := S (I);
+         if Current /= Character'Val (0) then
+            Last := I;
+            exit;
+         end if;
+      end loop;
+   end Empty_String_Range;
 end Common_Utils;
