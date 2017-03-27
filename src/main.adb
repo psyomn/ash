@@ -41,7 +41,7 @@ procedure Main is
    l1 : constant Listeners.Listener :=
       Make_Listener
         (Port => 3000,
-         Root => "./www1/",
+         Root => "./www1",
          Host => "localhost");
 begin
    Listener_Task.Construct (l1);
