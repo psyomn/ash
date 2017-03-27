@@ -23,14 +23,6 @@ package body Listeners is
         "Root Dir.   : " & Root_Str & CRLF & CRLF);
    end Print_Info;
 
-   function Tiny_Name (L : Listener) return String is
-      Name : constant String :=
-        (L.Host_Name) & "@" &
-         Integer'Image (L.Port_Number);
-   begin
-      return Name;
-   end Tiny_Name;
-
    --  Listen forever. Graceful shutdown if it receives some signal.
    procedure Listen (L : Listener) is
       Socket   : Socket_Type;

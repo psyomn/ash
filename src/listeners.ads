@@ -10,8 +10,5 @@ package Listeners is
    end record;
 
    procedure Print_Info (L : Listener);
-
    procedure Listen (L : Listener);
-
-   function Tiny_Name (L : Listener) return String;
 end Listeners;
