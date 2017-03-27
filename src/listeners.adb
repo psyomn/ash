@@ -11,6 +11,30 @@ package body Listeners is
    package IO renames Ada.Text_IO;
    package ASU renames Ada.Strings.Unbounded;
 
+   task body Launch_Listener is
+      L : Listener;
+   begin
+      accept Construct (The_Listener : in Listener) do
+         L := The_Listener;
+      end Construct;
+      accept Start;
+      Print_Info (L);
+      Listen (L);
+      accept Stop;
+   end Launch_Listener;
+
+   function Make_Listener
+     (Port : Integer;
+      Root : String;
+      Host : String) return Listeners.Listener is
+      L : Listeners.Listener;
+   begin
+      L.Port_Number := Port;
+      L.WS_Root_Path (1 .. Root'Last) := Root;
+      L.Host_Name (1 .. Host'Last) := Host;
+      return L;
+   end Make_Listener;
+
    procedure Print_Info (L : Listener) is
       Port_Str : constant String := Integer'Image (L.Port_Number);
       Host_Str : constant String := L.Host_Name;
