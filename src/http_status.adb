@@ -5,7 +5,7 @@ package body HTTP_Status is
          when CONTINUE            => return "Continue";
          when SWITCHING_PROTOCOLS => return "Switching Protocols";
 
-         when OK              => return "Ok";
+         when OK              => return "OK";
          when CREATED         => return "Created";
          when ACCEPTED        => return "Accepted";
          when NON_AUTHORITATIVE_INFORMATION  =>
