@@ -1,52 +1,38 @@
-with GNAT.Regpat;
+with Ada.Text_IO; use Ada.Text_IO;
 
 package body Request_Helpers is
    function Parse_Request_Type (R : String) return Request_Type is
-      First, Last : Positive;
-      Found       : Boolean;
+      RF : constant Positive := R'First;
    begin
-      Get_Word (R, First, Last, Found);
-
-      if R (First .. Last) = "GET"       then return GET;
-      elsif R (First .. Last) = "POST"   then return POST;
-      elsif R (First .. Last) = "PUT"    then return PUT;
-      elsif R (First .. Last) = "HEAD"   then return HEAD;
-      elsif R (First .. Last) = "DELETE" then return DELETE;
+      if    R (RF .. RF + 2) = "GET"     then return GET;
+      elsif R (RF .. RF + 2) = "PUT"     then return PUT;
+      elsif R (RF .. RF + 3) = "POST"    then return POST;
+      elsif R (RF .. RF + 3) = "HEAD"    then return HEAD;
+      elsif R (RF .. RF + 4) = "TRACE"   then return TRACE;
+      elsif R (RF .. RF + 5) = "DELETE"  then return DELETE;
+      elsif R (RF .. RF + 6) = "OPTIONS" then return OPTIONS;
       else return GET;
       end if;
    end Parse_Request_Type;
 
    function Parse_Request_URI (R : String) return String is
-      First, Last : Positive;
-      Found : Boolean;
+      First : Positive := 3;
+      Last  : Positive;
+      Blank : constant Character := ' ';
    begin
-      Get_Word (R, First, Last, Found);
-      Get_Word (R (Last + 1 .. R'Last), First, Last, Found);
-      --  Called twice, because the second 'word' is the uri in the request
-      --  header.
+      for I in Positive range R'Range loop
+         if R (I) = Blank then
+            First := I + 1;
+            exit;
+         end if;
+      end loop;
 
-      if Found then
-         return R (First .. Last);
-      end if;
-
-      return "uri not found.";
+      for I in Positive range First .. R'Last loop
+         if R (I) = Blank then
+            Last := (if I > 1 then I - 1 else I);
+            exit;
+         end if;
+      end loop;
+      return R (First .. Last);
    end Parse_Request_URI;
-
-   procedure Get_Word
-     (S           : String;
-      First, Last : out Positive;
-      Found       : out Boolean) is
-      Pattern     : constant String := "(\S+)";
-      Compiled    : constant GNAT.Regpat.Pattern_Matcher :=
-         GNAT.Regpat.Compile (Pattern);
-      Match_Array : GNAT.Regpat.Match_Array (0 .. 1);
-   begin
-      GNAT.Regpat.Match (Compiled, S, Match_Array);
-      Found := not GNAT.Regpat."="(Match_Array (1), GNAT.Regpat.No_Match);
-
-      if Found then
-         First := Match_Array (1).First;
-         Last  := Match_Array (1).Last;
-      end if;
-   end Get_Word;
 end Request_Helpers;
