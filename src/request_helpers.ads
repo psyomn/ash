@@ -1,7 +1,16 @@
 package Request_Helpers is
-   type Request_Type is (HEAD, GET, POST, PUT, DELETE, TRACE, OPTIONS, OTHER);
-   Request_Type_Error : Exception;
+   Request_Type_Error : exception;
 
-   function Parse_Request_Type (R : String) return Request_Type;
+   type Request_Method is (
+      GET,
+      POST,
+      PUT,
+      DELETE,
+      HEAD,
+      OPTIONS,
+      TRACE
+   );
+
+   function Parse_Request_Type (R : String) return Request_Method;
    function Parse_Request_URI (R : String)  return String;
 end Request_Helpers;

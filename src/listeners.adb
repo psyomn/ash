@@ -64,13 +64,13 @@ package body Listeners is
       Bind_Socket (Server, Address);
       Listen_Socket (Server);
 
-      --  pass to other socket.
       Put_Line ("Successfully listening on: " & Port_Img);
 
       Listening_Loop :
       while not L.Shutdown loop
          Accept_Socket (Server, Socket, Address);
          Channel := Stream (Socket);
+
          declare
             Counter : Integer := 0;
             Request : ASU.Unbounded_String;
@@ -97,11 +97,12 @@ package body Listeners is
               (Channel, Transaction_Handlers.Handle_Request (
                  ASU.To_String (Request),
                  L.WS_Root_Path));
+
          exception when E : others =>
             IO.Put_Line
-              ("Listeners, at main listen loop: " &
-               Exception_Name (E) &
-               Exception_Message (E));
+              (IO.Standard_Error,
+               "Listeners, at main listen loop: " &
+               Exception_Name (E) & Exception_Message (E));
          end;
          Free (Channel);
          Close_Socket (Socket);

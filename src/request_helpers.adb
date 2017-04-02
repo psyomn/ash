@@ -1,7 +1,5 @@
-with Ada.Text_IO; use Ada.Text_IO;
-
 package body Request_Helpers is
-   function Parse_Request_Type (R : String) return Request_Type is
+   function Parse_Request_Type (R : String) return Request_Method is
       RF : constant Positive := R'First;
    begin
       if    R (RF .. RF + 2) = "GET"     then return GET;

@@ -1,4 +1,4 @@
-with Ada.Text_IO;
+with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Exceptions; use Ada.Exceptions;
 with Ada.IO_Exceptions; use Ada.IO_Exceptions;
 
@@ -11,7 +11,7 @@ use Request_Helpers, Response_Helpers;
 
 package body Transaction_Handlers is
    function Handle_Request (R : String; Context : String) return String is
-      R_Type : constant Request_Type := Parse_Request_Type (R);
+      R_Type : constant Request_Method := Parse_Request_Type (R);
       URI    : constant String := Parse_Request_URI (R);
       First, Last : Positive;
    begin
@@ -25,24 +25,36 @@ package body Transaction_Handlers is
             begin
                return Make_Response (OK, File_Utils.Read (Path));
             end;
-         when POST =>
-            return Make_Response (OK, "<h1>Got Post</h1>");
-         when PUT =>
-            return Make_Response (OK, "<h1>Got Put</h1>");
-         when DELETE =>
-            return Make_Response (OK, "<h1>Got DELETE</h1>");
-         when HEAD =>
-            return Make_Response (OK, "<h1>Got HEAD</h1>");
-         when others =>
-            return Make_Response (INTERNAL_ERROR, "<h1>Error!</h1>");
+
+         when POST | PUT | DELETE | HEAD | OPTIONS | TRACE =>
+            return Make_Response (
+               NOT_IMPLEMENTED,
+               "<h1>Got Request - Haven't been implemented yet though</h1>"
+            );
+
       end case;
    exception
-      when E : Device_Error =>
-         Ada.Text_IO.Put_Line (Exception_Name (E) & " " & Exception_Message (E));
-         return Make_Response (NOT_FOUND, "Resource not found");
+      when E : Ada.IO_Exceptions.Device_Error =>
+         Put_Line (
+            Standard_Error,
+            Exception_Name (E) & " " & Exception_Message (E)
+         );
+
+         return Make_Response (
+            NOT_FOUND,
+            "Resource not found"
+         );
 
       when E : others =>
-         Ada.Text_IO.Put_Line (Exception_Name (E) & " " & Exception_Message (E));
-         return Make_Response (INTERNAL_ERROR, "Something really bad happened.");
+         Put_Line (
+            Standard_Error,
+            Exception_Name (E) & " " & Exception_Message (E)
+         );
+
+         return Make_Response (
+            INTERNAL_ERROR,
+            "Something really bad happened."
+         );
+
    end Handle_Request;
 end Transaction_Handlers;
