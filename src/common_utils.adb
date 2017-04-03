@@ -23,10 +23,10 @@ package body Common_Utils is
    end Header_String;
 
    procedure Empty_String_Range
-     (S : String;
+     (S     : String;
       First : out Positive;
-      Last : out Positive) is
-      Current : Character := Character'Val (0);
+      Last  : out Positive) is
+      Current   : Character          := Character'Val (0);
    begin
       First := S'First;
       Last := S'Last;
@@ -47,4 +47,12 @@ package body Common_Utils is
          end if;
       end loop;
    end Empty_String_Range;
+
+   procedure Empty_String (S : in out String) is
+      Null_Char : constant Character := Character'Val (0);
+   begin
+      for I in Positive range S'First .. S'Last loop
+         S (I) := Null_Char;
+      end loop;
+   end Empty_String;
 end Common_Utils;

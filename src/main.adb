@@ -1,7 +1,5 @@
-with Ada.Text_IO; use Ada.TeXT_IO;
-
-with Ada.Exceptions; use Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Exceptions; use Ada.Exceptions;
 
 with Listeners; use Listeners;
 with CLI; use CLI;
@@ -16,9 +14,7 @@ procedure Main is
          Host => "localhost");
 begin
 
-   Put_Line ("ASDFASD");
    Process_Command_Line_Arguments (l1);
-   Put_Line ("ASDASDASDASDASD");
 
    Listener_Task.Construct (l1);
    Listener_Task.Start;

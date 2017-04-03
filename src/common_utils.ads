@@ -13,4 +13,7 @@ package Common_Utils is
       First : out Positive;
       Last : out Positive)
       with Inline;
+
+   procedure Empty_String (S : in out String)
+      with Inline;
 end Common_Utils;
