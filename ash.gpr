@@ -3,7 +3,7 @@
 --
 --   gnatmake -P axios.gpr -Xmode=debug -p
 --
-project Axios is
+project Ash is
   for Main        use ("main.adb");
   for Source_Dirs use ("src/**");
   for Exec_Dir    use "bin/";
@@ -14,7 +14,7 @@ project Axios is
   for Object_Dir use "obj/" & external ("mode", "release");
 
   package Builder is
-    for Executable ("main.adb") use "axios";
+    for Executable ("main.adb") use "ash";
   end Builder;
 
   package IDE is
@@ -40,4 +40,4 @@ project Axios is
 
   package Linker is
   end Linker;
-end Axios;
+end Ash;

@@ -13,7 +13,7 @@ package body Response_Helpers is
       return
         First_Header_Line (Status) &
         Response_Date     & CRLF &
-        "Server: axios"   & CRLF &
+        "Server: ash"     & CRLF &
         Content_Type      & CRLF &
         "Content-Length: ";
    end Headers;
