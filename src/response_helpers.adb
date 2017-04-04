@@ -25,8 +25,10 @@ package body Response_Helpers is
       Format       : constant gct.Picture_String :=
          "%a, %d %B %Y %H:%M:%S EST";
       Field_Name   : constant String := "Date: ";
+      Result : constant String :=
+         Field_Name & gct.Image (Current_Time, Format);
    begin
-      return Field_Name & gct.Image (Current_Time, Format);
+      return Result;
    end Response_Date;
 
    function Make_Response
