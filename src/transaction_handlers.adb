@@ -34,7 +34,8 @@ package body Transaction_Handlers is
 
       end case;
    exception
-      when E : Ada.IO_Exceptions.Device_Error =>
+      when E : Ada.IO_Exceptions.Device_Error
+             | Ada.IO_Exceptions.Name_Error =>
          Put_Line (
             Standard_Error,
             Exception_Name (E) & " " & Exception_Message (E)
