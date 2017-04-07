@@ -6,24 +6,6 @@ with Ada.Exceptions; use Ada.Exceptions;
 package body File_Utils is
    package IO renames Ada.Text_IO;
 
-   procedure Write (File_Name : String; Contents : String) is
-      The_File_Mode : constant IO.File_Mode := Ada.Text_IO.Out_File;
-      The_File      : IO.File_Type;
-   begin
-      IO.Create
-        (File => The_File,
-         Mode => The_File_Mode,
-         Name => File_Name);
-
-      IO.Put
-        (File => The_File,
-         Item => Contents);
-
-      IO.Close (File => The_File);
-   exception when E : others =>
-      IO.Put_Line (Exception_Name (E) & Exception_Message (E));
-   end Write;
-
    function Read (File_Name : String) return String is
       File_Size : constant Natural :=
          Natural (Ada.Directories.Size (File_Name));
