@@ -1,6 +1,7 @@
 with Ada.Text_IO;
+with Ada.Directories;
+with Ada.Direct_IO;
 with Ada.Exceptions; use Ada.Exceptions;
-with Ada.Strings.Unbounded;
 
 package body File_Utils is
    package IO renames Ada.Text_IO;
@@ -24,31 +25,27 @@ package body File_Utils is
    end Write;
 
    function Read (File_Name : String) return String is
-      The_File_Mode : constant IO.File_Mode := IO.In_File;
-      The_File      : IO.File_Type;
-      Contents      : Ada.Strings.Unbounded.Unbounded_String;
+      File_Size : constant Natural :=
+         Natural (Ada.Directories.Size (File_Name));
+
+      subtype File_String is String (1 .. File_Size);
+      package File_String_IO is new Ada.Direct_IO (File_String);
+      The_File : File_String_IO.File_Type;
+      Contents : File_String;
    begin
-      IO.Open
+      File_String_IO.Open
         (File => The_File,
-         Mode => The_File_Mode,
+         Mode => File_String_IO.In_File,
          Name => File_Name);
 
-      while not IO.End_Of_File (The_File) loop
-         declare
-            Line : constant String := IO.Get_Line (The_File);
-         begin
-            Ada.Strings.Unbounded.Append (
-              Source => Contents,
-              New_Item => Line (1 .. Line'Last)
-            );
-         end;
-      end loop;
+      File_String_IO.Read (The_File, Item => Contents);
 
-      IO.Close (File => The_File);
-      return Ada.Strings.Unbounded.To_String (Contents);
+      File_String_IO.Close (File => The_File);
+
+      return Contents;
    exception
-      when Ada.Text_IO.Device_Error =>
-         IO.Close (File => The_File);
-         raise Ada.Text_IO.Device_Error;
+      when File_String_IO.Device_Error =>
+         File_String_IO.Close (File => The_File);
+         raise File_String_IO.Device_Error;
    end Read;
 end File_Utils;
