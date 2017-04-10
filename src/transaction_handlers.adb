@@ -46,6 +46,17 @@ package body Transaction_Handlers is
             "Resource not found"
          );
 
+      when E : Request_Helpers.Request_Type_Error =>
+         Put_Line (
+                 Standard_Error,
+            Exception_Name (E) & " " & Exception_Message (E)
+         );
+
+         return Make_Response (
+            Bad_Request,
+            Exception_Name (E) & " " & Exception_Message (E)
+         );
+
       when E : others =>
          Put_Line (
             Standard_Error,

@@ -9,7 +9,7 @@ package body Request_Helpers is
       elsif R (RF .. RF + 4) = "TRACE"   then return TRACE;
       elsif R (RF .. RF + 5) = "DELETE"  then return DELETE;
       elsif R (RF .. RF + 6) = "OPTIONS" then return OPTIONS;
-      else return GET;
+      else raise Request_Type_Error;
       end if;
    end Parse_Request_Type;
 
