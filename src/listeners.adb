@@ -98,11 +98,20 @@ package body Listeners is
                  ASU.To_String (Request),
                  L.WS_Root_Path));
 
-         exception when E : others =>
-            IO.Put_Line
-              (IO.Standard_Error,
-               "Listeners, at main listen loop: " &
-               Exception_Name (E) & Exception_Message (E));
+         exception
+            when E : End_Error =>
+               IO.Put_Line (
+                  IO.Standard_Error,
+                  "problem reading from socket: " &
+                  Exception_Name (E) & " " & Exception_Message (E)
+               );
+
+            when E : Socket_Error =>
+               IO.Put_Line (
+                  IO.Standard_Error,
+                  "Listeners, at main listen loop: " &
+                  Exception_Name (E) & " " & Exception_Message (E)
+               );
          end;
          Free (Channel);
          Close_Socket (Socket);
