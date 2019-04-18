@@ -23,7 +23,11 @@ package body Transaction_Handlers is
                CFirst : constant Positive := Context'First;
                Path   : constant String := Context (CFirst .. First) & URI;
             begin
-               return Make_Response (OK, File_Utils.Read (Path));
+               if File_Utils.Is_Dir (Path) then
+                  return Make_Response (OK, File_Utils.Read (Path & "/index.html"));
+               else
+                  return Make_Response (OK, File_Utils.Read (Path));
+               end if;
             end;
 
          when POST | PUT | DELETE | HEAD | OPTIONS | TRACE =>
