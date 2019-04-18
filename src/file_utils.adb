@@ -43,4 +43,12 @@ package body File_Utils is
          File_String_IO.Close (File => The_File);
          raise File_String_IO.Device_Error;
    end Read;
+
+   function Is_Dir (Path : String) return Boolean is
+      use type Ada.Directories.File_Kind;
+   begin
+      return Ada.Directories.Exists (Path)
+             and then Ada.Directories.Kind (Path) = Ada.Directories.Directory;
+   end Is_Dir;
+
 end File_Utils;
