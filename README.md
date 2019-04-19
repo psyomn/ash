@@ -7,3 +7,7 @@ Ash is a simple http server, written in Ada.
 ```nocode
 make
 ```
+
+## LICENSE
+
+See License
