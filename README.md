@@ -8,6 +8,13 @@ Ash is a simple http server, written in Ada.
 make
 ```
 
+## Run tests
+
+```bash
+git submodule init --update
+make test
+```
+
 ## LICENSE
 
 See License

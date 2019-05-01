@@ -1,11 +1,18 @@
+ADA=gprbuild
+
 all: debug
 remake: clean debug
 
 debug:
-	gnatmake -P ash.gpr -Xmode=debug -p
+	$(ADA) -P ash.gpr -Xmode=debug -p
 
 release:
-	gnatmake -P ash.gpr -Xmode=release -p
+	$(ADA) -P ash.gpr -Xmode=release -p
+
+test:
+	$(ADA) -P test.gpr -p
+	@./bin/test/test_ash
+.PHONY: test
 
 clean:
 	rm -rf obj/*
