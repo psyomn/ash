@@ -11,17 +11,10 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
-with Common_Utils_Suite;
-with File_Utils_Suite;
+with AUnit.Test_Suites; use AUnit.Test_Suites;
 
-package body Ash_Suite is
+package File_Utils_Suite is
 
-   function Suite return Access_Test_Suite is
-      Ret : constant Access_Test_Suite := new Test_Suite;
-   begin
-      Ret.Add_Test (Common_Utils_Suite.Suite);
-      Ret.Add_Test (File_Utils_Suite.Suite);
-      return Ret;
-   end Suite;
+   function Suite return Access_Test_Suite;
 
-end Ash_Suite;
+end File_Utils_Suite;
