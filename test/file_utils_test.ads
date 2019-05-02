@@ -11,17 +11,15 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
-with Common_Utils_Suite;
-with File_Utils_Suite;
+with AUnit;
+with AUnit.Test_Fixtures;
 
-package body Ash_Suite is
+package File_Utils_Test is
 
-   function Suite return Access_Test_Suite is
-      Ret : constant Access_Test_Suite := new Test_Suite;
-   begin
-      Ret.Add_Test (Common_Utils_Suite.Suite);
-      Ret.Add_Test (File_Utils_Suite.Suite);
-      return Ret;
-   end Suite;
+   type Test is new AUnit.Test_Fixtures.Test_Fixture with null record;
 
-end Ash_Suite;
+   procedure Test_Read_File_With_Normal_Named_String (T : in out Test);
+
+   procedure Test_Read_File_With_Null_Named_String (T : in out Test);
+
+end File_Utils_Test;

@@ -11,17 +11,26 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
-with Common_Utils_Suite;
-with File_Utils_Suite;
+with AUnit.Test_Caller;
 
-package body Ash_Suite is
+with File_Utils_Test; use File_Utils_Test;
+
+package body File_Utils_Suite is
+
+   package Caller is new AUnit.Test_Caller (File_Utils_Test.Test);
 
    function Suite return Access_Test_Suite is
-      Ret : constant Access_Test_Suite := new Test_Suite;
+      Ret : constant Access_Test_Suite := AUnit.Test_Suites.New_Suite;
    begin
-      Ret.Add_Test (Common_Utils_Suite.Suite);
-      Ret.Add_Test (File_Utils_Suite.Suite);
+      Ret.Add_Test
+        (Caller.Create
+           ("test read file with normal named string",
+            Test_Read_File_With_Normal_Named_String'Access));
+      Ret.Add_Test
+        (Caller.Create
+           ("test read file with null named string",
+            Test_Read_File_With_Null_Named_String'Access));
       return Ret;
    end Suite;
 
-end Ash_Suite;
+end File_Utils_Suite;
