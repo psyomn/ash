@@ -14,6 +14,8 @@
 with AUnit.Assertions; use AUnit.Assertions;
 
 with Common_Utils; use Common_Utils;
+with Ada.Strings.Maps;
+with Ada.Strings.Fixed;
 
 package body Common_Utils_Test is
 
@@ -72,6 +74,8 @@ package body Common_Utils_Test is
 
    procedure Test_Empty_String_Range (T : in out Test) is
       pragma Unreferenced (T);
+      use Ada.Strings.Maps;
+      use Ada.Strings.Fixed;
 
       type Test_Case is record
          Data : String (1 .. 9);
@@ -81,21 +85,26 @@ package body Common_Utils_Test is
 
       type Tca is array (Positive range <>) of Test_Case;
 
-      Tc1 : constant Test_Case := ("hello    ", 1, 1);
-      Tc2 : constant Test_Case := ("    hello", 1, 1);
-      Tc3 : constant Test_Case := ("  hello  ", 1, 1);
+      Null_Map : constant Character_Mapping :=
+        To_Mapping (From => " ", To => "" & Character'Val (0));
+
+      Tc1 : constant Test_Case := (Translate ("hello    ", Null_Map), 5, 5);
+      Tc2 : constant Test_Case := (Translate ("    hello", Null_Map), 1, 5);
+      Tc3 : constant Test_Case := (Translate ("  hello  ", Null_Map), 1, 3);
+
       Tcs : constant Tca := (Tc1, Tc2, Tc3);
 
-      First, Last : Positive := 1;
+      F, L : Positive := 1;
    begin
       for I in Positive range Tcs'First .. Tcs'Last loop
          Empty_String_Range
-           (S => Tcs (I).Data,
-            First => First,
-            Last => Last);
+           (S => Tcs (I).Data, First => F, Last => L);
 
-         Assert (Tcs (I).First = First and Tcs (I).Last = Last,
-                 "did not get what was expected");
+         Assert (Tcs (I).First = F and Tcs (I).Last = L,
+                 "expected first,last:" &
+                   Tcs (I).First'Image & "," & Tcs (I).Last'Image & " " &
+                   "got first,last:" & F'Image & "," & F'Image & " " &
+                   "with data: ." & Tcs (I).Data & ".");
       end loop;
    end Test_Empty_String_Range;
 
