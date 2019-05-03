@@ -30,6 +30,11 @@ package body File_Utils_Suite is
         (Caller.Create
            ("test read file with null named string",
             Test_Read_File_With_Null_Named_String'Access));
+
+      Ret.Add_Test
+        (Caller.Create
+           ("test read file form null concatenated name",
+            Test_Read_File_From_Null_Concat_Name'Access));
       return Ret;
    end Suite;
 

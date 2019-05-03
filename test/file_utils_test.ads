@@ -22,4 +22,6 @@ package File_Utils_Test is
 
    procedure Test_Read_File_With_Null_Named_String (T : in out Test);
 
+   procedure Test_Read_File_From_Null_Concat_Name (T : in out Test);
+
 end File_Utils_Test;
