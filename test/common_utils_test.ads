@@ -28,4 +28,6 @@ package Common_Utils_Test is
 
    procedure Test_Empty_String_Range (T : in out Test);
 
+   procedure Test_Concat_Null_String (T : in out Test);
+
 end Common_Utils_Test;

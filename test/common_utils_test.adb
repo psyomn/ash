@@ -108,4 +108,22 @@ package body Common_Utils_Test is
       end loop;
    end Test_Empty_String_Range;
 
+   procedure Test_Concat_Null_String (T : in out Test) is
+      pragma Unreferenced (T);
+      Buff1, Buff2 : String (1 .. 1024) := (others => Character'Val (0));
+      Expected : constant String := "hellolle";
+   begin
+      Buff1 (1 .. 4) := "hell";
+      Buff2 (1 .. 4) := "olle";
+
+      declare
+         Actual : constant String :=
+           Concat_Null_Strings (Buff1, Buff2);
+      begin
+         Assert
+           (Actual = Expected,
+            "actual: " & Actual & " expected: " & Expected);
+      end;
+   end Test_Concat_Null_String;
+
 end Common_Utils_Test;

@@ -13,6 +13,7 @@
 --  limitations under the License.
 with AUnit.Assertions; use AUnit.Assertions;
 
+with Common_Utils;
 with File_Utils; use File_Utils;
 with Ada.Text_IO; use Ada.Text_IO;
 
@@ -53,34 +54,61 @@ package body File_Utils_Test is
       end;
    end Test_Read_File_With_Null_Named_String;
 
-
    procedure Test_Read_File_From_Null_Concat_Name (T : in out Test) is
       pragma Unreferenced (T);
       Path : constant String := "./test/fixtures/";
       File : constant String := "file.txt";
 
-      Buff_1 : String (1 .. 548) := (others => Character'Val (40));
-      Buff_2 : String (1 .. 548) := (others => Character'Val (40));
+      Buff_1 : String (1 .. 548) := (others => Character'Val (0));
+      Buff_2 : String (1 .. 548) := (others => Character'Val (0));
       Buff_3 : String (1 .. Buff_1'Length + Buff_2'Length) :=
         (others => Character'Val (0));
-
    begin
       Buff_1 (1 .. Path'Last) := Path;
       Buff_2 (1 .. File'Last) := File;
       Buff_3 := Buff_1 & Buff_2;
       Put_Line (Buff_3);
+
       declare
          Contents : constant String := Read (Buff_3);
+         pragma Unreferenced (Contents);
       begin
-         Assert (Contents'Length = Expected_Contents'Length,
-                 "lengths of returned string must be the same; " &
-                   "expected: " & Contents'Length'Image &
-                   "actual: " & Expected_Contents'Length'Image);
-
-         Assert (Contents = Expected_Contents,
-                 "expected: " & Expected_Contents &
-                   " actual: " & Contents);
+         --  NOTE: this should fail, and that's ok
+         Assert (False, "should fail trying using bad buffers");
       end;
+
+   exception
+      when Name_Error =>
+         null;
    end Test_Read_File_From_Null_Concat_Name;
+
+   procedure Test_Read_File_From_Null_Concat_Name_Fix (T : in out Test) is
+      pragma Unreferenced (T);
+      Path : constant String := "./test/fixtures/";
+      File : constant String := "file.txt";
+
+      Buff_1 : String (1 .. 548) := (others => Character'Val (0));
+      Buff_2 : String (1 .. 548) := (others => Character'Val (0));
+      Buff_3 : String (1 .. Buff_1'Length + Buff_2'Length) :=
+        (others => Character'Val (0));
+   begin
+      Buff_1 (1 .. Path'Last) := Path;
+      Buff_2 (1 .. File'Last) := File;
+      Buff_3 := Buff_1 & Buff_2;
+      Put_Line (Buff_3);
+
+      declare
+         Path : constant String :=
+           Common_Utils.Concat_Null_Strings (Buff_1, Buff_2);
+         Contents : constant String := Read (Path);
+         pragma Unreferenced (Contents);
+      begin
+         --  NOTE: this should fail, and that's ok
+         Assert (True, "ayyyay");
+      end;
+   exception
+      when Name_Error =>
+         Assert (False, "should not raise, path should be sound");
+   end Test_Read_File_From_Null_Concat_Name_Fix;
 
 end File_Utils_Test;
