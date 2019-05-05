@@ -68,4 +68,30 @@ package body Common_Utils is
          S (I) := Null_Char;
       end loop;
    end Empty_String;
+
+   function Concat_Null_Strings (S1, S2 : String) return String is
+      Upto1, Upto2 : Positive;
+   begin
+      for I in Positive range S1'Range loop
+         if S1 (I) = Character'Val (0) then
+            Upto1 := I - 1;
+            exit;
+         end if;
+      end loop;
+
+      for I in Positive range S2'Range loop
+         if S2 (I) = Character'Val (0) then
+            Upto2 := I - 1;
+            exit;
+         end if;
+      end loop;
+
+      declare
+         Ret : constant String (1 .. Upto1 + Upto2) :=
+           S1 (S1'First .. Upto1) & S2 (S2'First .. Upto2);
+      begin
+         return Ret;
+      end;
+   end Concat_Null_Strings;
+
 end Common_Utils;

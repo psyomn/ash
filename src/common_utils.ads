@@ -29,4 +29,6 @@ package Common_Utils is
 
    procedure Empty_String (S : in out String)
       with Inline;
+
+   function Concat_Null_Strings (S1, S2 : String) return String;
 end Common_Utils;

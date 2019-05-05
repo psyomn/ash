@@ -37,6 +37,9 @@ package body Common_Utils_Suite is
       Ret.Add_Test
         (Caller.Create ("test empty string range",
                         Test_Empty_String_Range'Access));
+      Ret.Add_Test
+        (Caller.Create ("test concat null string",
+                        Test_Concat_Null_String'Access));
       return Ret;
    end Suite;
 
