@@ -1,4 +1,4 @@
---  Copyright 2019 Simon Symeonidis (psyomn)
+--  Copyright 2019-2021 Simon Symeonidis (psyomn)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
 --  you may not use this file except in compliance with the License.
@@ -11,9 +11,7 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
-with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Exceptions; use Ada.Exceptions;
-with Ada.IO_Exceptions; use Ada.IO_Exceptions;
+with Ada.IO_Exceptions;
 
 with File_Utils;
 with Common_Utils;
@@ -53,37 +51,25 @@ package body Transaction_Handlers is
    exception
       when E : Ada.IO_Exceptions.Device_Error
              | Ada.IO_Exceptions.Name_Error =>
-         Put_Line (
-            Standard_Error,
-            Exception_Name (E) & " " & Exception_Message (E)
-         );
+         Common_Utils.Print_Exception (E, "request for a non existant resource");
 
          return Make_Response (
             NOT_FOUND,
             "Resource not found"
          );
-
       when E : Request_Helpers.Request_Type_Error =>
-         Put_Line (
-                 Standard_Error,
-            Exception_Name (E) & " " & Exception_Message (E)
-         );
+         Common_Utils.Print_Exception (E, "request type error");
 
          return Make_Response (
-            Bad_Request,
-            Exception_Name (E) & " " & Exception_Message (E)
+            BAD_REQUEST,
+            "bad request"
          );
-
       when E : others =>
-         Put_Line (
-            Standard_Error,
-            Exception_Name (E) & " " & Exception_Message (E)
-         );
+         Common_Utils.Print_Exception (E, "unknown error");
 
          return Make_Response (
             INTERNAL_ERROR,
-            "Something really bad happened."
+            "something really bad happened"
          );
-
    end Handle_Request;
 end Transaction_Handlers;

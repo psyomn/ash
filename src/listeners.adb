@@ -1,4 +1,4 @@
---  Copyright 2019 Simon Symeonidis (psyomn)
+--  Copyright 2019-2021 Simon Symeonidis (psyomn)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
 --  you may not use this file except in compliance with the License.
@@ -14,11 +14,10 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Strings;
 with Ada.Strings.Unbounded;
-with Ada.Exceptions; use Ada.Exceptions;
 with GNAT.Sockets; use GNAT.Sockets;
 
-with Response_Helpers; use Response_Helpers;
 with Transaction_Handlers;
+with Common_Utils;
 
 package body Listeners is
    package IO renames Ada.Text_IO;
@@ -53,11 +52,8 @@ package body Listeners is
       Host_Str : constant String := L.Host_Name;
       Root_Str : constant String := L.WS_Root_Path;
    begin
-      Put_Line (
-        "Listener Info: " & CRLF &
-        "Port Number : " & Port_Str & CRLF &
-        "Hostname    : " & Host_Str & CRLF &
-        "Root Dir.   : " & Root_Str & CRLF & CRLF);
+      Put_Line ("listening on " & Host_Str & ": " & Port_Str &
+                ", root dir.: " & Root_Str);
    end Print_Info;
 
    --  Listen forever. Graceful shutdown if it receives some signal.
@@ -67,7 +63,6 @@ package body Listeners is
       Address  : Sock_Addr_Type;
       Channel  : Stream_Access;
       The_Host : constant String := L.Host_Name;
-      Port_Img : constant String := Port_Type'Image (Address.Port);
    begin
       Address.Addr := Addresses (Get_Host_By_Name (The_Host), 1);
       Address.Port := Port_Type (L.Port_Number);
@@ -76,8 +71,6 @@ package body Listeners is
       Set_Socket_Option (Server, Socket_Level, (Reuse_Address, True));
       Bind_Socket (Server, Address);
       Listen_Socket (Server);
-
-      Put_Line ("Successfully listening on: " & Port_Img);
 
       Listening_Loop :
       while not L.Shutdown loop
@@ -113,18 +106,11 @@ package body Listeners is
 
          exception
             when E : End_Error =>
-               IO.Put_Line (
-                  IO.Standard_Error,
-                  "problem reading from socket: " &
-                  Exception_Name (E) & " " & Exception_Message (E)
-               );
-
+               Common_Utils.Print_Exception (E, "socket reading EOF error");
             when E : Socket_Error =>
-               IO.Put_Line (
-                  IO.Standard_Error,
-                  "Listeners, at main listen loop: " &
-                  Exception_Name (E) & " " & Exception_Message (E)
-               );
+               Common_Utils.Print_Exception (E, "generic socket error");
+            when E : others =>
+               Common_Utils.Print_Exception (E, "unexpected error");
          end;
          Free (Channel);
          Close_Socket (Socket);

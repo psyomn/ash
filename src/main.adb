@@ -35,8 +35,13 @@ begin
 
 exception
    when E : CLI_Argument_Exception =>
-      Put_Line ("Error: " & Exception_Message (E));
+      Put_Line ("error: " & Exception_Message (E));
       New_Line;
-      Put_Line ("Example usage: ");
-      Put_Line ("ash [-h HOST] [-p PORT] [-r ROOTDIR]");
+      Put_Line ("example usage: ");
+      Put_Line ("ash [-h host] [-p port] [-r rootdir]");
+
+   when E : others =>
+      Put_Line (
+         "error:" & Exception_Message (E) & " " &
+         "");
 end Main;

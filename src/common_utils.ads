@@ -11,15 +11,15 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
+
+with Ada.Exceptions; use Ada.Exceptions;
+with GNAT.Traceback.Symbolic; use GNAT.Traceback.Symbolic;
+with Ada.Text_IO; use Ada.Text_IO;
+
 package Common_Utils is
-   function Integer_To_Trimmed_String (I : Integer) return String
-      with Inline;
-
-   function Header_String (Field : String; Value : String) return String
-      with Inline;
-
-   function Header_String (Field : String; Value : Integer) return String
-      with Inline;
+   --  TODO: I'm not sure if we should really care about inlines. Maybe they
+   --  make sense in the functionality bellow, but I would like to empirically
+   --  see if any of these make sense.
 
    procedure Empty_String_Range
      (S : String;
@@ -30,5 +30,17 @@ package Common_Utils is
    procedure Empty_String (S : in out String)
       with Inline;
 
+   function Header_String (Field : String; Value : String) return String
+      with Inline;
+
+   function Header_String (Field : String; Value : Integer) return String
+      with Inline;
+
+   function Integer_To_Trimmed_String (I : Integer) return String
+      with Inline;
+
    function Concat_Null_Strings (S1, S2 : String) return String;
+
+   procedure Print_Exception (E       : Exception_Occurrence;
+                              Message : String);
 end Common_Utils;

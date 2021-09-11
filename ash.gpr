@@ -31,6 +31,7 @@ project Ash is
 
   package Builder is
     for Executable ("main.adb") use "ash";
+    for Switches (others) use ("-j0");
   end Builder;
 
   package IDE is
@@ -52,6 +53,7 @@ project Ash is
   end Compiler;
 
   package Binder is
+    for Switches ("Ada") use ("-Es");
   end Binder;
 
   package Linker is

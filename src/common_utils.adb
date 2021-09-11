@@ -94,4 +94,16 @@ package body Common_Utils is
       end;
    end Concat_Null_Strings;
 
+   procedure Print_Exception (E : Exception_Occurrence; Message : String)
+   is
+      package IO renames Ada.Text_IO;
+   begin
+      IO.Put_Line (
+         IO.Standard_Error,
+         Message & " " &
+         Exception_Name (E) & " " &
+         Exception_Message (E) & " " &
+         Symbolic_Traceback (E)
+      );
+   end Print_Exception;
 end Common_Utils;
